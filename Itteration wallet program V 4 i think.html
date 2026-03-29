@@ -1,0 +1,3749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iteration Wallet — Rear View Foresight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   THE INTERRUPTED ESTATE
+   Warm oak. Brass fittings. Leather that cost real money.
+   The room that got finished. Beautiful materials, 
+   confidently placed, mid-sentence when the funding stopped.
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  /* Walls & surfaces */
+  --cream:       #E8DCC8;
+  --cream-deep:  #D9CAAE;
+  --cream-mid:   #DFD1BB;
+  --parchment:   #CCBA96;
+  --linen:       #EDE4D2;
+
+  /* Oak & wood */
+  --walnut:      #140C04;
+  --walnut-mid:  #1E1108;
+  --walnut-warm: #2A1A0C;
+  --oak:         #5A3818;
+  --oak-light:   #7A5228;
+
+  /* Brass hardware */
+  --brass:       #B8872A;
+  --brass-light: #D4A84B;
+  --brass-dim:   #7A5C1A;
+  --brass-glow:  rgba(184,137,42,0.15);
+
+  /* Leather */
+  --leather:     #6B3B2C;
+  --leather-mid: #8B5240;
+  --leather-dim: rgba(107,61,46,0.12);
+
+  /* Status */
+  --sage:        #4A6741;
+  --sage-glow:   rgba(74,103,65,0.14);
+  --clay:        #8B4030;
+  --clay-glow:   rgba(139,64,48,0.14);
+  --sand:        #8B7355;
+
+  /* Text */
+  --ink:         #1A1208;
+  --ink-mid:     #4A3828;
+  --ink-dim:     #8A7060;
+  --ink-ghost:   #B8A898;
+
+  /* Borders & lines */
+  --rule:        #C8B898;
+  --rule-light:  #DDD0BC;
+  --rule-dark:   #A89078;
+
+  /* ── Curves — neo-deco hierarchy ──────────────── */
+  --r-xl:   18px;   /* large containers: modal, table-wrap, log-wrap */
+  --r-lg:   14px;   /* cards: stat, project, drive */
+  --r-md:   10px;   /* medium interactive: cmd-plate, estate-bar */
+  --r-sm:   20px;   /* pill: buttons, chips, badges, inputs */
+  --r-xs:    6px;   /* micro: toast, heartbeat */
+
+  /* ── Fonts ─────────────────────────────────────── */
+  --serif:       'Fraunces', Georgia, serif;
+  --body:        'Source Serif 4', 'Georgia', serif;
+  --mono:        'JetBrains Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Oak grain texture overlay — very subtle */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      92deg,
+      transparent,
+      transparent 120px,
+      rgba(90,55,20,0.025) 120px,
+      rgba(90,55,20,0.025) 121px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 80px,
+      rgba(90,55,20,0.016) 80px,
+      rgba(90,55,20,0.016) 81px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── APP SHELL ── */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 64px 1fr;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER — The oak door frame of the house
+   ═══════════════════════════════════════════ */
+.header {
+  grid-column: 1 / -1;
+  background: var(--walnut);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 0;
+  position: relative;
+  z-index: 100;
+  border-bottom: 3px solid var(--brass-dim);
+  box-shadow: 0 2px 24px rgba(10,6,2,0.35);
+}
+
+/* Inlaid brass detail line */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass-dim), var(--brass), var(--brass-dim), transparent);
+  opacity: 0.6;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none; flex-shrink: 0;
+}
+
+.logo-lockup {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--brass-dim);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(184,137,42,0.08);
+  position: relative;
+}
+
+.logo-lockup::before {
+  content: '';
+  position: absolute; inset: 3px;
+  border: 1px solid rgba(184,137,42,0.2);
+  border-radius: 1px;
+}
+
+.logo-lockup svg {
+  width: 18px; height: 18px;
+}
+
+.logo-text {
+  display: flex; flex-direction: column; gap: 1px;
+}
+
+.logo-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.logo-estate {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--brass-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.header-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(184,137,42,0.2);
+  margin: 0 28px;
+  flex-shrink: 0;
+}
+
+.header-tagline {
+  font-family: var(--body);
+  font-size: 12px;
+  color: rgba(244,237,224,0.4);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 20px;
+}
+
+/* Watcher — the estate's groundskeeper indicator */
+.watcher-row {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(184,137,42,0.6);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.heartbeat {
+  display: flex; gap: 2px; align-items: flex-end;
+  height: 12px;
+}
+
+.heartbeat span {
+  width: 2px;
+  background: var(--brass-dim);
+  border-radius: 1px;
+  animation: beat 1.8s ease-in-out infinite;
+}
+
+.heartbeat span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.heartbeat span:nth-child(2) { height: 10px; animation-delay: 0.1s; }
+.heartbeat span:nth-child(3) { height: 6px; animation-delay: 0.2s; }
+.heartbeat span:nth-child(4) { height: 12px; animation-delay: 0.05s; }
+.heartbeat span:nth-child(5) { height: 4px; animation-delay: 0.15s; }
+
+@keyframes beat {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; background: var(--brass); }
+}
+
+/* Vault status — the front door lock */
+.vault-lock {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 16px;
+  border: 1px solid rgba(184,137,42,0.2);
+  border-radius: var(--r-sm);
+  background: rgba(20,12,4,0.4);
+  cursor: default;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.vault-lock::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--clay);
+  transition: background 0.3s;
+}
+
+.vault-lock.open::before { background: var(--sage); }
+
+.vault-lock-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.vault-lock-text {
+  font-family: var(--mono); font-size: 10px;
+  color: rgba(244,237,224,0.55);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.vault-lock.open .vault-lock-text { color: rgba(244,237,224,0.8); }
+
+/* ═══════════════════════════════════════════
+   SIDEBAR — The hallway with the leather wainscoting
+   ═══════════════════════════════════════════ */
+.sidebar {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  border-right: 1px solid rgba(210,165,65,0.40);
+
+  /* ─────────────────────────────────────────────────────────────────
+     MARQUETRY PANEL TEXTURE
+     Fine wood grain set into geometric cells, separated by
+     brass inlay seams. Like the lid of a very good box.
+     No animal reference. Just craft.
+
+     Structure:
+       Layer 1  — Brass seam lines (the borders you love)
+       Layer 2  — Fine wood grain flow within each cell
+       Layer 3  — Warm base ground
+  ───────────────────────────────────────────────────────────────── */
+
+  background-color: #1C0E04;
+
+  background-image:
+
+    /* ══ LAYER 1: BRASS SEAM LINES ══════════════════════════════════
+       Three-axis geometric grid — same angles as before, now crisper.
+       Gold, not black. These are inlay lines, not cracks.
+    ═════════════════════════════════════════════════════════════════ */
+
+    /* Seam: 60° axis */
+    repeating-linear-gradient(
+      60deg,
+      transparent 0px,    transparent 36px,
+      rgba(195,148,45,0.70) 36px, rgba(215,168,60,0.85) 37.5px,
+      rgba(195,148,45,0.70) 39px, transparent 39px,
+      transparent 54px
+    ),
+    /* Seam: -60° axis */
+    repeating-linear-gradient(
+      -60deg,
+      transparent 0px,    transparent 36px,
+      rgba(185,140,40,0.55) 36px, rgba(205,158,52,0.70) 37.5px,
+      rgba(185,140,40,0.55) 39px, transparent 39px,
+      transparent 54px
+    ),
+    /* Seam: vertical axis */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,    transparent 42px,
+      rgba(180,135,38,0.50) 42px, rgba(200,152,48,0.65) 43.5px,
+      rgba(180,135,38,0.50) 45px, transparent 45px,
+      transparent 63px
+    ),
+    /* Seam: horizontal accent — very subtle, adds depth */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,    transparent 54px,
+      rgba(165,122,32,0.22) 54px, rgba(175,130,36,0.30) 55px,
+      rgba(165,122,32,0.22) 56px, transparent 56px,
+      transparent 82px
+    ),
+
+    /* ══ LAYER 2: WOOD GRAIN WITHIN CELLS ════════════════════════════
+       Fine parallel grain lines — flow in two directions to suggest
+       alternating grain panels (like real marquetry veneer cuts).
+       Warm amber and honey tones, not orange.
+    ═════════════════════════════════════════════════════════════════ */
+
+    /* Primary grain — fine, tight, warm honey */
+    repeating-linear-gradient(
+      108deg,
+      rgba(120,68,18,0.00) 0px,
+      rgba(148,85,22,0.18) 3px,
+      rgba(165,98,26,0.22) 5px,
+      rgba(148,85,22,0.18) 7px,
+      rgba(120,68,18,0.00) 10px,
+      rgba(138,78,20,0.10) 13px,
+      rgba(155,92,24,0.16) 16px,
+      rgba(138,78,20,0.10) 19px,
+      rgba(120,68,18,0.00) 22px
+    ),
+    /* Counter grain — slightly different angle for the alternating panels */
+    repeating-linear-gradient(
+      72deg,
+      rgba(110,62,16,0.00) 0px,
+      rgba(142,82,20,0.12) 4px,
+      rgba(158,95,24,0.16) 7px,
+      rgba(142,82,20,0.12) 10px,
+      rgba(110,62,16,0.00) 14px,
+      rgba(130,74,18,0.08) 18px,
+      rgba(148,88,22,0.12) 22px,
+      rgba(130,74,18,0.08) 26px,
+      rgba(110,62,16,0.00) 30px
+    ),
+    /* Warm highlight band — simulates light catching the grain */
+    repeating-linear-gradient(
+      108deg,
+      transparent 0px,    transparent 44px,
+      rgba(210,155,50,0.06) 44px, rgba(220,165,55,0.10) 52px,
+      rgba(210,155,50,0.06) 60px, transparent 60px,
+      transparent 88px
+    ),
+
+    /* ══ LAYER 3: WARM GROUND ══════════════════════════════════════
+       Subtle warmth variation — not uniform, like a panel of wood
+       held at a slight angle to the light.
+    ═════════════════════════════════════════════════════════════════ */
+    radial-gradient(ellipse 180px 400px at 15% 50%,  rgba(80,40,8,0.30) 0%, transparent 100%),
+    radial-gradient(ellipse 180px 400px at 85% 50%,  rgba(60,28,5,0.25) 0%, transparent 100%),
+    radial-gradient(ellipse 240px 200px at 50% 0%,   rgba(95,50,12,0.20) 0%, transparent 100%),
+    radial-gradient(ellipse 240px 200px at 50% 100%, rgba(70,35,7,0.20) 0%, transparent 100%);
+
+  box-shadow: 2px 0 22px rgba(18,8,1,0.40), inset -1px 0 0 rgba(210,165,60,0.15);
+}
+
+/* Leather panel effect on the sidebar */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 0; bottom: 80px;
+  background: 
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 48px,
+      rgba(255,255,255,0.015) 48px,
+      rgba(255,255,255,0.015) 49px
+    );
+  pointer-events: none;
+}
+
+/* Brass runner at the bottom of the hall */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: 80px; left: 16px; right: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass-dim), transparent);
+}
+
+.sidebar-inner {
+  padding: 20px 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Dark veil — keeps nav text legible over the shell texture */
+  background: linear-gradient(
+    90deg,
+    rgba(8,3,0,0.18) 0%,
+    rgba(8,3,0,0.10) 55%,
+    rgba(8,3,0,0.15) 100%
+  );
+}
+
+.nav-group { padding: 0 12px 20px; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   VERTICAL ACCORDION SIDEBAR NAV
+   Station → expand → submenu rolls down.
+   VAULT lives at the bottom, always visible, decorated.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0 0;
+  /* Readability veil over the marquetry texture */
+  background: linear-gradient(90deg,
+    rgba(8,3,0,0.22) 0%,
+    rgba(8,3,0,0.14) 60%,
+    rgba(8,3,0,0.20) 100%
+  );
+}
+
+/* ── Station = one top-level nav entry ──────────────────────── */
+.vn-station { position: relative; }
+
+/* ── The clickable row ──────────────────────────────────────── */
+.vn-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.vn-btn:hover { background: rgba(255,255,255,0.04); }
+
+.vn-station.vn-active > .vn-btn,
+.vn-station.vn-parent > .vn-btn {
+  border-left-color: var(--brass);
+  background: rgba(184,137,42,0.07);
+}
+
+/* ── Icon box ───────────────────────────────────────────────── */
+.vn-ico {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(184,137,42,0.12);
+  border-radius: var(--r-md);
+  transition: all 0.20s cubic-bezier(0.34,1.3,0.64,1);
+}
+.vn-ico svg {
+  width: 15px; height: 15px;
+  color: rgba(244,237,224,0.45);
+  transition: color 0.18s, filter 0.18s;
+}
+
+.vn-btn:hover .vn-ico {
+  background: rgba(184,137,42,0.10);
+  border-color: rgba(184,137,42,0.28);
+  box-shadow: 0 3px 10px rgba(20,10,2,0.28), 0 0 8px rgba(184,137,42,0.08);
+  transform: translateY(-1px);
+}
+.vn-btn:hover .vn-ico svg { color: rgba(244,237,224,0.80); }
+
+.vn-station.vn-active > .vn-btn .vn-ico,
+.vn-station.vn-parent > .vn-btn .vn-ico {
+  background: rgba(184,137,42,0.18);
+  border-color: rgba(210,168,65,0.50);
+  box-shadow: 0 0 14px rgba(184,137,42,0.20), inset 0 1px 0 rgba(255,230,120,0.12);
+}
+.vn-station.vn-active > .vn-btn .vn-ico svg,
+.vn-station.vn-parent > .vn-btn .vn-ico svg {
+  color: var(--brass);
+  filter: drop-shadow(0 0 4px rgba(184,137,42,0.55));
+}
+
+/* ── Label ──────────────────────────────────────────────────── */
+.vn-lbl {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(244,237,224,0.60);
+  flex: 1;
+  transition: color 0.15s;
+  letter-spacing: 0.01em;
+}
+.vn-btn:hover .vn-lbl { color: rgba(244,237,224,0.88); }
+.vn-station.vn-active > .vn-btn .vn-lbl,
+.vn-station.vn-parent > .vn-btn .vn-lbl {
+  color: var(--cream-text);
+  font-weight: 600;
+}
+
+/* ── Expand arrow ───────────────────────────────────────────── */
+.vn-arr {
+  width: 10px; height: 6px;
+  flex-shrink: 0;
+  color: rgba(184,137,42,0.38);
+  transition: transform 0.26s cubic-bezier(0.4,0,0.2,1), color 0.15s;
+}
+.vn-station.vn-open > .vn-btn .vn-arr { transform: rotate(180deg); }
+.vn-btn:hover .vn-arr { color: rgba(184,137,42,0.68); }
+
+/* ── Count badge (projects) ─────────────────────────────────── */
+.vn-count {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--brass-dim);
+  background: rgba(184,137,42,0.12);
+  border: 1px solid rgba(184,137,42,0.20);
+  padding: 1px 7px;
+  border-radius: var(--r-sm);
+  min-width: 22px;
+  text-align: center;
+}
+
+/* ── SUBMENU — slides down ───────────────────────────────────── */
+.vn-sub {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1);
+  /* Inset — visually "inside" the parent station */
+  background: rgba(6,2,0,0.30);
+  border-top: 1px solid rgba(184,137,42,0.06);
+}
+.vn-station.vn-open > .vn-sub { max-height: 280px; }
+
+/* ── Sub-item row ───────────────────────────────────────────── */
+.vn-sub-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 9px 22px;
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(244,237,224,0.50);
+  border-left: 2px solid transparent;
+  transition: all 0.14s;
+  user-select: none;
+}
+.vn-sub-btn svg {
+  width: 12px; height: 12px;
+  flex-shrink: 0;
+  color: rgba(184,137,42,0.38);
+  transition: color 0.14s;
+}
+.vn-sub-btn:hover {
+  color: rgba(244,237,224,0.88);
+  background: rgba(255,255,255,0.04);
+  border-left-color: rgba(184,137,42,0.32);
+}
+.vn-sub-btn:hover svg { color: rgba(184,137,42,0.72); }
+
+.vn-sub-btn.vn-active {
+  color: var(--cream-text);
+  border-left-color: var(--brass);
+  background: rgba(184,137,42,0.08);
+  font-weight: 600;
+}
+.vn-sub-btn.vn-active svg { color: var(--brass); }
+
+/* Sandbox — warm safe-zone tint */
+.vn-sandbox-btn:hover { border-left-color: rgba(122,180,80,0.40) !important; }
+.vn-sandbox-btn.vn-active { border-left-color: rgba(100,180,60,0.80) !important; background: rgba(80,140,40,0.08) !important; }
+.vn-sandbox-btn.vn-active svg { color: rgba(120,200,80,0.85) !important; }
+
+/* Contender — brass/star tint */
+.vn-contender-btn:hover { border-left-color: rgba(184,137,42,0.55) !important; }
+.vn-contender-btn.vn-active { border-left-color: var(--brass) !important; background: rgba(184,137,42,0.10) !important; }
+.vn-contender-btn.vn-active svg { color: var(--brass) !important; }
+
+/* ── Chip badges inside sub-items ───────────────────────────── */
+.vn-chip {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: var(--r-sm);
+  letter-spacing: 0.04em;
+}
+.vn-chip-safe  { background: rgba(80,140,40,0.16); color: rgba(120,200,80,0.80); border: 1px solid rgba(80,140,40,0.22); }
+.vn-chip-brass { background: rgba(184,137,42,0.16); color: var(--brass); border: 1px solid rgba(184,137,42,0.24); }
+.vn-chip-alert { background: rgba(180,60,40,0.16); color: rgba(220,100,80,0.90); border: 1px solid rgba(180,60,40,0.24); }
+
+/* ── Spacer pushes vault to bottom ─────────────────────────── */
+.vn-flex { flex: 1; min-height: 16px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   VAULT DOCK — The important button at the bottom
+   Art deco frame, brass lettering, status strip beneath
+   ═══════════════════════════════════════════════════════════════ */
+
+.vault-dock {
+  padding: 10px 14px 8px;
+  border-top: 1px solid rgba(184,137,42,0.18);
+  flex-shrink: 0;
+  background: linear-gradient(0deg, rgba(8,3,0,0.35) 0%, rgba(8,3,0,0.15) 100%);
+}
+
+.vault-dock-btn {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.vault-dock-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 13px 18px 12px;
+  background: linear-gradient(180deg, rgba(42,26,8,0.95) 0%, rgba(28,16,4,0.98) 100%);
+  border: 1px solid rgba(184,137,42,0.32);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  position: relative;
+  transition: all 0.24s;
+  box-shadow: inset 0 1px 0 rgba(210,168,65,0.20), 0 4px 18px rgba(10,4,0,0.40);
+}
+.vault-dock-inner::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(184,137,42,0.10);
+  border-radius: calc(var(--r-lg) - 3px);
+  pointer-events: none;
+}
+
+.vault-dock-icon {
+  width: 24px; height: 24px;
+  color: var(--brass);
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 5px rgba(184,137,42,0.35));
+  transition: all 0.24s;
+}
+
+.vault-dock-word {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--brass);
+  text-shadow: 0 0 14px rgba(184,137,42,0.45);
+  transition: all 0.24s;
+}
+
+/* Corner deco marks */
+.vdeco {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-color: rgba(184,137,42,0.35);
+  border-style: solid;
+  z-index: 2;
+}
+.vdeco-tl { top: 4px; left: 4px;  border-width: 1px 0 0 1px; border-radius: 2px 0 0 0; }
+.vdeco-tr { top: 4px; right: 4px; border-width: 1px 1px 0 0; border-radius: 0 2px 0 0; }
+.vdeco-bl { bottom: 22px; left: 4px;  border-width: 0 0 1px 1px; border-radius: 0 0 0 2px; }
+.vdeco-br { bottom: 22px; right: 4px; border-width: 0 1px 1px 0; border-radius: 0 0 2px 0; }
+
+.vault-dock-status {
+  display: block;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(184,137,42,0.52);
+  background: rgba(10,4,0,0.65);
+  border: 1px solid rgba(184,137,42,0.16);
+  border-top: none;
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  padding: 4px 0 5px;
+  transition: all 0.24s;
+}
+
+.vault-dock-btn:hover .vault-dock-inner {
+  background: linear-gradient(180deg, rgba(52,32,10,0.98) 0%, rgba(34,20,6,0.98) 100%);
+  border-color: rgba(210,168,65,0.50);
+  box-shadow: inset 0 1px 0 rgba(210,168,65,0.28), 0 6px 22px rgba(10,4,0,0.50), 0 0 24px rgba(184,137,42,0.12);
+  transform: translateY(-1px);
+}
+.vault-dock-btn:hover .vault-dock-icon {
+  filter: drop-shadow(0 0 10px rgba(184,137,42,0.65));
+  transform: scale(1.05);
+}
+.vault-dock-btn:hover .vault-dock-word { text-shadow: 0 0 20px rgba(184,137,42,0.75); }
+.vault-dock-btn:hover .vault-dock-status { color: rgba(184,137,42,0.80); }
+
+/* Vault open state */
+.vault-dock-btn.vault-open .vault-dock-inner { border-color: rgba(80,180,60,0.45); background: linear-gradient(180deg, rgba(20,50,18,0.95) 0%, rgba(14,34,12,0.98) 100%); }
+.vault-dock-btn.vault-open .vault-dock-icon  { color: rgba(100,210,75,0.90); filter: drop-shadow(0 0 7px rgba(80,200,55,0.55)); }
+.vault-dock-btn.vault-open .vault-dock-word  { color: rgba(110,220,80,0.92); text-shadow: 0 0 14px rgba(80,200,55,0.45); }
+.vault-dock-btn.vault-open .vault-dock-status { color: rgba(100,210,75,0.72); }
+.vault-dock-btn.vault-open .vdeco { border-color: rgba(80,180,60,0.38); }
+
+/* Vault active (viewing vault view) */
+.vn-station-vault-active .vault-dock-inner { border-color: rgba(210,168,65,0.55); }
+
+/* Legacy compat */
+.nav-badge { display: none; }
+.elev-btn, .elev-pill, .nav-rail, .nav-group-label { display: none !important; }
+
+
+
+/* Cradle card header glow on hover */
+.cradle-card:hover .cradle-card-header {
+  filter: brightness(1.25);
+  transition: filter 0.22s;
+}
+.cradle-card-header {
+  transition: filter 0.22s;
+}
+/* Folder card hover — see material system below */
+
+
+  --cream-text:  #EDE3D0;
+
+/* ═══════════════════════════════════════════
+   MAIN — The room that got finished
+   ═══════════════════════════════════════════ */
+.main {
+  overflow-y: auto;
+  background: var(--cream);
+  position: relative;
+}
+
+.main::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 200px,
+      rgba(160,110,60,0.025) 200px,
+      rgba(160,110,60,0.025) 201px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.view {
+  display: none;
+  padding: 36px 40px;
+  animation: room-enter .22s ease;
+  position: relative; z-index: 1;
+  min-height: 100%;
+}
+.view.active { display: block; animation: viewIn 0.22s ease; }
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes room-enter {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── VIEW HEADING ── */
+.view-heading {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+
+.view-title {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--walnut);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.view-title em {
+  font-style: italic;
+  color: var(--oak-light);
+}
+
+.view-sub {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 300;
+  color: var(--ink-ghost);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.view-action {
+  flex-shrink: 0; margin-left: 20px;
+}
+
+/* ── VAULT STATUS BAR ── */
+.estate-status {
+  background: var(--walnut);
+  border-radius: 3px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 32px;
+  border: 1px solid var(--walnut-warm);
+  box-shadow: 0 2px 12px rgba(10,6,2,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+  position: relative; overflow: hidden;
+}
+
+.estate-status::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--brass-dim), var(--brass), var(--brass-dim));
+  opacity: 0.8;
+}
+
+.estate-status-item { flex: 1; }
+
+.estate-status-label {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: rgba(184,137,42,0.5);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.estate-status-value {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(244,237,224,0.5);
+  transition: color 0.3s;
+}
+
+.estate-status-value.locked { color: #C07060; }
+.estate-status-value.open   { color: #8DC085; }
+.estate-status-value.running { color: rgba(244,237,224,0.65); }
+
+.estate-open-btn {
+  background: transparent;
+  border: 1px solid var(--brass-dim);
+  color: var(--brass);
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 10px 20px; border-radius: 2px;
+  cursor: pointer; transition: all 0.2s;
+  flex-shrink: 0;
+  font-weight: 400;
+  position: relative;
+}
+
+.estate-open-btn::before {
+  content: '';
+  position: absolute; inset: 3px;
+  border: 1px solid rgba(184,137,42,0.08);
+  border-radius: 1px;
+  transition: all 0.2s;
+}
+
+.estate-open-btn:hover {
+  background: rgba(184,137,42,0.12);
+  border-color: var(--brass);
+  box-shadow: 0 0 16px rgba(184,137,42,0.15);
+}
+
+.estate-open-btn.lock {
+  border-color: rgba(244,237,224,0.15);
+  color: rgba(244,237,224,0.4);
+}
+
+.estate-open-btn.lock::before { border-color: transparent; }
+
+.estate-open-btn.lock:hover {
+  background: rgba(244,237,224,0.05);
+  border-color: rgba(244,237,224,0.25);
+  color: rgba(244,237,224,0.6);
+  box-shadow: none;
+}
+
+/* ── STATS ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brass-dim), var(--brass-light), var(--brass-dim));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.stat-card:hover { border-color: var(--rule); }
+.stat-card:hover::after { opacity: 0.6; }
+
+.stat-number {
+  font-family: var(--serif);
+  font-size: 38px; font-weight: 400;
+  color: var(--walnut);
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-dim);
+  letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sec-name {
+  font-family: var(--serif); font-size: 18px; font-weight: 400;
+  color: var(--walnut-warm);
+  letter-spacing: -0.005em;
+}
+
+.sec-action {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--brass-dim);
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.sec-action:hover { color: var(--brass); }
+.sec-name em { font-style: italic; color: var(--oak-light); }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: var(--mono); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 2px;
+  cursor: pointer; transition: all 0.15s;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink-mid);
+  position: relative;
+}
+
+.btn:hover {
+  border-color: var(--oak-light);
+  color: var(--walnut);
+  background: rgba(92,58,30,0.04);
+}
+
+.btn-brass {
+  background: var(--brass-glow);
+  border-color: var(--brass-dim);
+  color: var(--brass);
+}
+
+.btn-brass:hover {
+  background: rgba(184,137,42,0.2);
+  border-color: var(--brass);
+  color: var(--brass-light);
+}
+
+/* ── CRADLE PROJECT CARDS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.cradle-card {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.cradle-card:hover {
+  border-color: var(--rule);
+  box-shadow: 0 4px 20px rgba(30,18,8,0.10);
+  transform: translateY(-1px);
+}
+
+.cradle-card-header {
+  height: 6px;
+  background: linear-gradient(90deg, var(--brass-dim), var(--brass-light), var(--brass-dim));
+  transition: filter 0.22s;
+}
+
+.cradle-card:hover .cradle-card-header {
+  filter: brightness(1.25);
+}
+
+.cradle-card-body {
+  padding: 18px 20px 16px;
+  position: relative;
+}
+
+.cradle-version-tag {
+  position: absolute; top: 14px; right: 14px;
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--brass-dim);
+  background: rgba(184,137,42,0.08);
+  border: 1px solid rgba(184,137,42,0.15);
+  padding: 2px 8px; border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
+.cradle-card-name {
+  font-family: var(--serif); font-size: 17px; font-weight: 400;
+  color: var(--walnut); margin-bottom: 4px;
+  letter-spacing: -0.005em;
+}
+
+.cradle-card-path {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-ghost); margin-bottom: 14px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.cradle-card-foot {
+  display: flex; gap: 20px; align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-light);
+}
+
+.cradle-card-stat {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-dim);
+}
+
+.cradle-card-stat strong {
+  color: var(--oak); font-weight: 500;
+}
+
+/* Palette colours for card headers — 12 warm tones */
+/* ═══════════════════════════════════════════════════════════════
+   MATERIAL SYSTEM — Cradle headers (flat accent strip, unchanged)
+   ═══════════════════════════════════════════════════════════════ */
+.ci-0  .cradle-card-header { background: linear-gradient(90deg, #7A5C1A, #B8872A, #7A5C1A); }
+.ci-1  .cradle-card-header { background: linear-gradient(90deg, #4A5C1A, #7A9B2A, #4A5C1A); }
+.ci-2  .cradle-card-header { background: linear-gradient(90deg, #1A4A5C, #2A7A9B, #1A4A5C); }
+.ci-3  .cradle-card-header { background: linear-gradient(90deg, #5C1A1A, #9B2A2A, #5C1A1A); }
+.ci-4  .cradle-card-header { background: linear-gradient(90deg, #3A1A5C, #6B2A9B, #3A1A5C); }
+.ci-5  .cradle-card-header { background: linear-gradient(90deg, #1A5C3A, #2A9B6B, #1A5C3A); }
+.ci-6  .cradle-card-header { background: linear-gradient(90deg, #5C3A1A, #9B6B2A, #5C3A1A); }
+.ci-7  .cradle-card-header { background: linear-gradient(90deg, #1A1A5C, #2A2A9B, #1A1A5C); }
+.ci-8  .cradle-card-header { background: linear-gradient(90deg, #5C1A3A, #9B2A6B, #5C1A3A); }
+.ci-9  .cradle-card-header { background: linear-gradient(90deg, #3A5C1A, #6B9B2A, #3A5C1A); }
+.ci-10 .cradle-card-header { background: linear-gradient(90deg, #1A5C5C, #2A9B9B, #1A5C5C); }
+.ci-11 .cradle-card-header { background: linear-gradient(90deg, #5C5C1A, #9B9B2A, #5C5C1A); }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLDER CARD TAB — Material accent band (replaces flat strip)
+   ═══════════════════════════════════════════════════════════════ */
+.ci-0  .folder-card-tab { background: linear-gradient(90deg, #3d2208 0%, #a8600d 30%, #d4891a 50%, #a8600d 70%, #3d2208 100%); }
+.ci-1  .folder-card-tab { background: linear-gradient(90deg, #0d2208 0%, #3a6b0d 30%, #5a9b1a 50%, #3a6b0d 70%, #0d2208 100%); }
+.ci-2  .folder-card-tab { background: linear-gradient(90deg, #080d22 0%, #0d3a6b 30%, #1a5a9b 50%, #0d3a6b 70%, #080d22 100%); }
+.ci-3  .folder-card-tab { background: linear-gradient(90deg, #220808 0%, #6b0d0d 30%, #9b1a1a 50%, #6b0d0d 70%, #220808 100%); }
+.ci-4  .folder-card-tab { background: linear-gradient(90deg, #120822 0%, #3d0d6b 30%, #5e1a9b 50%, #3d0d6b 70%, #120822 100%); }
+.ci-5  .folder-card-tab { background: linear-gradient(90deg, #082212 0%, #0d6b3a 30%, #1a9b5a 50%, #0d6b3a 70%, #082212 100%); }
+.ci-6  .folder-card-tab { background: linear-gradient(90deg, #220e06 0%, #7a3a0a 30%, #b05a12 50%, #7a3a0a 70%, #220e06 100%); }
+.ci-7  .folder-card-tab { background: linear-gradient(90deg, #050822 0%, #0a0d6b 30%, #12189b 50%, #0a0d6b 70%, #050822 100%); }
+.ci-8  .folder-card-tab { background: linear-gradient(90deg, #220812 0%, #6b0d3a 30%, #9b1a5a 50%, #6b0d3a 70%, #220812 100%); }
+.ci-9  .folder-card-tab { background: linear-gradient(90deg, #122208 0%, #4a6b0d 30%, #739b1a 50%, #4a6b0d 70%, #122208 100%); }
+.ci-10 .folder-card-tab { background: linear-gradient(90deg, #062222 0%, #0d6b6b 30%, #1a9b9b 50%, #0d6b6b 70%, #062222 100%); }
+.ci-11 .folder-card-tab { background: linear-gradient(90deg, #221e06 0%, #6b620d 30%, #9b8e1a 50%, #6b620d 70%, #221e06 100%); }
+
+/* ═══════════════════════════════════════════════════════════════
+   HEX MOUNT — Brass bezel ring around material tile
+   ═══════════════════════════════════════════════════════════════ */
+.hex-mount {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 54px;
+  height: 62px;
+  /* Brass ring — conic swings mimic angled lathe cuts */
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #2a1e12 0deg, #6b4c1e 45deg, #d4af37 90deg,
+    #8b6d3f 135deg, #2a1e12 180deg, #8b6d3f 225deg,
+    #d4af37 270deg, #6b4c1e 315deg, #2a1e12 360deg
+  );
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  transition: filter 0.22s, transform 0.22s;
+  flex-shrink: 0;
+}
+
+.folder-card:hover .hex-mount {
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,0.7)) drop-shadow(0 2px 4px rgba(0,0,0,0.4)) brightness(1.12);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEX TILE — Physical material surface with grain, depth, lacquer
+   Architecture:
+     .hex            → base material color + directional grain striae
+     .hex::before    → sub-surface depth vignette (countersunk recess)
+     .hex::after     → lacquer coat: fractal micro-scuff + convex specular
+   ═══════════════════════════════════════════════════════════════ */
+.hex {
+  width: 44px;
+  height: 51px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Sub-surface depth — dark vignette makes material recede into the brass bezel */
+.hex::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 92% 92% at 50% 50%,
+      transparent 30%,
+      rgba(0,0,0,0.45) 68%,
+      rgba(0,0,0,0.82) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Lacquer coat — fractal micro-scuff noise + convex Fresnel specular arc */
+.hex::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 48% 38% at 26% 24%, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.08) 45%, transparent 68%),
+    radial-gradient(ellipse 30% 22% at 72% 72%, rgba(255,255,255,0.04) 0%, transparent 100%);
+  opacity: 0.20;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.22s;
+}
+
+.folder-card:hover .hex::after {
+  opacity: 0.36;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATERIAL SURFACES — 12 patterns with distinct grain character
+   Each material has a unique combination of:
+     · Directional grain (repeating-linear-gradient striae)
+     · Organic mottling (radial blotches at depth)
+     · Internal bloom (translucent light trapped in the material)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ci-0 — Amber Honey (classic warm tortoiseshell, diagonal fiber) */
+.ci-0 .hex {
+  background:
+    repeating-linear-gradient(
+      38deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.13) 3px,
+      rgba(0,0,0,0.13) 4px
+    ),
+    repeating-linear-gradient(
+      -52deg,
+      transparent,
+      transparent 7px,
+      rgba(0,0,0,0.07) 7px,
+      rgba(0,0,0,0.07) 8px
+    ),
+    radial-gradient(ellipse 58% 44% at 24% 26%, rgba(210,130,18,0.90), transparent),
+    radial-gradient(ellipse 44% 52% at 72% 20%, rgba(165,92,8,0.76), transparent),
+    radial-gradient(ellipse 50% 40% at 48% 74%, rgba(190,115,12,0.82), transparent),
+    radial-gradient(ellipse 36% 56% at 84% 64%, rgba(225,148,22,0.70), transparent),
+    #1a0d04;
+}
+
+/* ci-1 — Verdant Smoke (green tortoiseshell, crossing grain) */
+.ci-1 .hex {
+  background:
+    repeating-linear-gradient(
+      28deg,
+      transparent,
+      transparent 4px,
+      rgba(0,0,0,0.11) 4px,
+      rgba(0,0,0,0.11) 5px
+    ),
+    repeating-linear-gradient(
+      118deg,
+      transparent,
+      transparent 9px,
+      rgba(30,60,10,0.09) 9px,
+      rgba(30,60,10,0.09) 10px
+    ),
+    radial-gradient(ellipse 55% 48% at 28% 24%, rgba(68,118,22,0.88), transparent),
+    radial-gradient(ellipse 40% 58% at 74% 32%, rgba(44,95,14,0.74), transparent),
+    radial-gradient(ellipse 56% 36% at 40% 80%, rgba(88,138,28,0.80), transparent),
+    radial-gradient(ellipse 46% 42% at 80% 70%, rgba(55,110,18,0.68), transparent),
+    #060e04;
+}
+
+/* ci-2 — Aegean Stone (sodalite, near-horizontal cleavage planes) */
+.ci-2 .hex {
+  background:
+    repeating-linear-gradient(
+      8deg,
+      transparent,
+      transparent 5px,
+      rgba(255,255,255,0.06) 5px,
+      rgba(255,255,255,0.06) 6px
+    ),
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 11px,
+      rgba(0,0,0,0.10) 11px,
+      rgba(0,0,0,0.10) 12px
+    ),
+    radial-gradient(ellipse 52% 48% at 22% 34%, rgba(32,88,180,0.86), transparent),
+    radial-gradient(ellipse 40% 56% at 72% 24%, rgba(20,64,148,0.72), transparent),
+    radial-gradient(ellipse 62% 38% at 50% 76%, rgba(44,108,200,0.80), transparent),
+    radial-gradient(ellipse 34% 50% at 82% 62%, rgba(28,76,162,0.66), transparent),
+    #04060f;
+}
+
+/* ci-3 — Garnet Deep (wine-red, irregular conchoidal fracture) */
+.ci-3 .hex {
+  background:
+    repeating-radial-gradient(
+      ellipse 120% 60% at 50% 50%,
+      transparent,
+      transparent 5px,
+      rgba(0,0,0,0.09) 5px,
+      rgba(0,0,0,0.09) 6px
+    ),
+    repeating-linear-gradient(
+      62deg,
+      transparent,
+      transparent 6px,
+      rgba(80,0,0,0.08) 6px,
+      rgba(80,0,0,0.08) 7px
+    ),
+    radial-gradient(ellipse 56% 44% at 18% 28%, rgba(165,32,36,0.88), transparent),
+    radial-gradient(ellipse 46% 52% at 68% 22%, rgba(128,22,26,0.74), transparent),
+    radial-gradient(ellipse 44% 42% at 44% 76%, rgba(180,44,42,0.82), transparent),
+    radial-gradient(ellipse 38% 54% at 82% 66%, rgba(142,26,32,0.68), transparent),
+    #0f0304;
+}
+
+/* ci-4 — Amethyst Veil (smoky purple, floating phantom veils) */
+.ci-4 .hex {
+  background:
+    repeating-linear-gradient(
+      -22deg,
+      transparent,
+      transparent 6px,
+      rgba(120,40,180,0.07) 6px,
+      rgba(120,40,180,0.07) 7px
+    ),
+    repeating-linear-gradient(
+      68deg,
+      transparent,
+      transparent 12px,
+      rgba(0,0,0,0.06) 12px,
+      rgba(0,0,0,0.06) 13px
+    ),
+    radial-gradient(ellipse 54% 48% at 26% 32%, rgba(108,44,170,0.86), transparent),
+    radial-gradient(ellipse 44% 58% at 70% 26%, rgba(80,28,138,0.72), transparent),
+    radial-gradient(ellipse 60% 40% at 46% 78%, rgba(128,54,185,0.78), transparent),
+    radial-gradient(ellipse 38% 52% at 80% 64%, rgba(90,34,152,0.66), transparent),
+    #080410;
+}
+
+/* ci-5 — Malachite (banded concentric rings, tight striation) */
+.ci-5 .hex {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.14) 3px,
+      rgba(0,0,0,0.14) 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(10,80,30,0.10) 8px,
+      rgba(10,80,30,0.10) 9px
+    ),
+    radial-gradient(ellipse 68% 26% at 50% 18%, rgba(22,148,68,0.80), transparent),
+    radial-gradient(ellipse 62% 24% at 50% 46%, rgba(12,118,52,0.74), transparent),
+    radial-gradient(ellipse 70% 26% at 50% 74%, rgba(28,162,74,0.82), transparent),
+    radial-gradient(ellipse 76% 16% at 50% 60%, rgba(6,96,42,0.60), transparent),
+    #030e06;
+}
+
+/* ci-6 — Cognac Leather (bourbon amber, long diagonal cut) */
+.ci-6 .hex {
+  background:
+    repeating-linear-gradient(
+      52deg,
+      transparent,
+      transparent 5px,
+      rgba(0,0,0,0.12) 5px,
+      rgba(0,0,0,0.12) 6px
+    ),
+    repeating-linear-gradient(
+      142deg,
+      transparent,
+      transparent 14px,
+      rgba(100,40,0,0.07) 14px,
+      rgba(100,40,0,0.07) 15px
+    ),
+    radial-gradient(ellipse 50% 50% at 22% 32%, rgba(185,85,14,0.88), transparent),
+    radial-gradient(ellipse 44% 56% at 68% 24%, rgba(148,64,10,0.74), transparent),
+    radial-gradient(ellipse 54% 38% at 52% 74%, rgba(168,74,12,0.80), transparent),
+    radial-gradient(ellipse 40% 50% at 84% 62%, rgba(202,96,16,0.68), transparent),
+    #160804;
+}
+
+/* ci-7 — Lapis Night (midnight lapis, gold pyrite fleck) */
+.ci-7 .hex {
+  background:
+    repeating-linear-gradient(
+      -8deg,
+      transparent,
+      transparent 8px,
+      rgba(0,0,0,0.12) 8px,
+      rgba(0,0,0,0.12) 9px
+    ),
+    repeating-linear-gradient(
+      82deg,
+      transparent,
+      transparent 4px,
+      rgba(180,150,20,0.05) 4px,
+      rgba(180,150,20,0.05) 5px
+    ),
+    radial-gradient(ellipse 2% 2% at 38% 42%, rgba(220,188,50,0.70), transparent),
+    radial-gradient(ellipse 1.5% 1.5% at 62% 28%, rgba(200,170,40,0.60), transparent),
+    radial-gradient(ellipse 2% 1.5% at 55% 68%, rgba(210,178,44,0.55), transparent),
+    radial-gradient(ellipse 46% 52% at 20% 30%, rgba(16,42,125,0.90), transparent),
+    radial-gradient(ellipse 36% 60% at 74% 22%, rgba(10,26,98,0.76), transparent),
+    radial-gradient(ellipse 58% 36% at 48% 76%, rgba(22,52,145,0.82), transparent),
+    #020408;
+}
+
+/* ci-8 — Plum Rose (dark rose quartz, shallow angled cleavage) */
+.ci-8 .hex {
+  background:
+    repeating-linear-gradient(
+      -38deg,
+      transparent,
+      transparent 5px,
+      rgba(0,0,0,0.10) 5px,
+      rgba(0,0,0,0.10) 6px
+    ),
+    repeating-linear-gradient(
+      52deg,
+      transparent,
+      transparent 10px,
+      rgba(80,10,40,0.08) 10px,
+      rgba(80,10,40,0.08) 11px
+    ),
+    radial-gradient(ellipse 56% 46% at 24% 34%, rgba(158,44,95,0.86), transparent),
+    radial-gradient(ellipse 44% 54% at 72% 28%, rgba(126,30,74,0.72), transparent),
+    radial-gradient(ellipse 48% 42% at 46% 74%, rgba(172,54,105,0.80), transparent),
+    radial-gradient(ellipse 38% 50% at 80% 66%, rgba(110,24,62,0.66), transparent),
+    #0e0408;
+}
+
+/* ci-9 — Fern Amber (olive-gold, low-angle wood-grain fiber) */
+.ci-9 .hex {
+  background:
+    repeating-linear-gradient(
+      18deg,
+      transparent,
+      transparent 4px,
+      rgba(0,0,0,0.10) 4px,
+      rgba(0,0,0,0.10) 5px
+    ),
+    repeating-linear-gradient(
+      -162deg,
+      transparent,
+      transparent 9px,
+      rgba(60,80,0,0.07) 9px,
+      rgba(60,80,0,0.07) 10px
+    ),
+    radial-gradient(ellipse 58% 48% at 26% 26%, rgba(112,148,18,0.86), transparent),
+    radial-gradient(ellipse 42% 56% at 72% 30%, rgba(86,122,12,0.72), transparent),
+    radial-gradient(ellipse 52% 42% at 44% 78%, rgba(128,162,22,0.80), transparent),
+    radial-gradient(ellipse 40% 52% at 82% 64%, rgba(96,132,16,0.68), transparent),
+    #080a03;
+}
+
+/* ci-10 — Verdigris (copper patina, crystalline bloom clusters) */
+.ci-10 .hex {
+  background:
+    repeating-radial-gradient(
+      circle at 30% 40%,
+      transparent,
+      transparent 4px,
+      rgba(0,0,0,0.08) 4px,
+      rgba(0,0,0,0.08) 5px
+    ),
+    repeating-linear-gradient(
+      44deg,
+      transparent,
+      transparent 7px,
+      rgba(0,60,50,0.07) 7px,
+      rgba(0,60,50,0.07) 8px
+    ),
+    radial-gradient(ellipse 50% 52% at 22% 32%, rgba(22,148,136,0.84), transparent),
+    radial-gradient(ellipse 44% 58% at 70% 24%, rgba(12,122,110,0.70), transparent),
+    radial-gradient(ellipse 62% 38% at 48% 76%, rgba(32,162,148,0.78), transparent),
+    radial-gradient(ellipse 36% 50% at 82% 64%, rgba(16,135,124,0.66), transparent),
+    #030c0b;
+}
+
+/* ci-11 — Citrine Smoke (smoky topaz, tight diagonal haze) */
+.ci-11 .hex {
+  background:
+    repeating-linear-gradient(
+      -28deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.09) 3px,
+      rgba(0,0,0,0.09) 4px
+    ),
+    repeating-linear-gradient(
+      62deg,
+      transparent,
+      transparent 8px,
+      rgba(120,100,0,0.07) 8px,
+      rgba(120,100,0,0.07) 9px
+    ),
+    radial-gradient(ellipse 54% 48% at 24% 30%, rgba(205,178,26,0.86), transparent),
+    radial-gradient(ellipse 42% 56% at 72% 26%, rgba(168,145,18,0.72), transparent),
+    radial-gradient(ellipse 58% 40% at 46% 76%, rgba(220,194,30,0.80), transparent),
+    radial-gradient(ellipse 38% 52% at 82% 66%, rgba(182,158,22,0.68), transparent),
+    #0c0a03;
+}
+
+/* ── FOLDER CARDS (Files view) ── */
+.folder-card {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.folder-card:hover {
+  border-color: var(--rule);
+  box-shadow: 0 4px 20px rgba(30,18,8,0.10);
+  transform: translateY(-1px);
+}
+
+.folder-card-tab {
+  height: 8px;
+  background: linear-gradient(90deg, var(--brass-dim), var(--brass-light), var(--brass-dim));
+  transition: filter 0.22s;
+}
+
+.folder-card:hover .folder-card-tab {
+  filter: brightness(1.2);
+}
+
+.folder-card-body {
+  padding: 18px 76px 16px 18px;
+  position: relative;
+}
+
+.folder-card-icon {
+  width: 32px; height: 28px;
+  color: var(--oak-light);
+  opacity: 0.55;
+  margin-bottom: 10px;
+}
+
+.folder-card-name {
+  font-family: var(--serif); font-size: 16px; font-weight: 400;
+  color: var(--walnut); margin-bottom: 5px;
+}
+
+.folder-card-meta {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-ghost);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── FILE TABLE ── */
+.table-wrap {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 100px 1fr 100px;
+  padding: 11px 20px;
+  background: var(--cream-deep);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 100px 1fr 100px;
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--rule-light);
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.table-row:last-child { border-bottom: none; }
+.table-row:hover { background: var(--cream-deep); }
+
+.table-file-name {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--body); font-size: 13px;
+  color: var(--walnut-warm);
+}
+
+.table-file-icon {
+  width: 14px; height: 14px;
+  color: var(--oak-light); opacity: .8; flex-shrink: 0;
+}
+
+.table-cell {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-dim);
+}
+
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px;
+}
+
+.chip-safe {
+  background: var(--sage-glow);
+  color: var(--sage);
+  border: 1px solid rgba(74,103,65,0.25);
+}
+
+.chip-staging {
+  background: rgba(184,137,42,0.1);
+  color: var(--brass);
+  border: 1px solid rgba(184,137,42,0.2);
+}
+
+.chip-archive {
+  background: var(--cream-mid);
+  color: var(--sand);
+  border: 1px solid var(--rule);
+}
+
+.chip-alert {
+  background: var(--clay-glow);
+  color: var(--clay);
+  border: 1px solid rgba(139,64,48,0.25);
+}
+
+.table-actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+.table-btn {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-dim);
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 2px;
+  cursor: pointer; transition: all 0.12s;
+}
+
+.table-btn:hover { border-color: var(--oak-light); color: var(--walnut); }
+.table-btn.remove:hover { border-color: var(--brass-dim); color: var(--brass); }
+.table-btn.delete:hover { border-color: rgba(139,64,48,0.4); color: var(--clay); }
+
+/* ── EVENT LOG ── */
+.log-wrap {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.log-header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--cream-deep);
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--serif); font-size: 14px; font-weight: 400;
+  color: var(--walnut-warm); font-style: italic;
+}
+
+.log-header span {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost); font-style: normal;
+  letter-spacing: 0.12em;
+}
+
+.log-entries { max-height: 260px; overflow-y: auto; }
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 52px 180px 1fr;
+  gap: 0;
+  padding: 9px 20px;
+  border-bottom: 1px solid var(--rule-light);
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  align-items: baseline;
+}
+
+.log-entry:last-child { border-bottom: none; }
+
+.log-ts { color: var(--ink-ghost); }
+.log-type { color: var(--oak); letter-spacing: 0.06em; }
+.log-type.alert   { color: var(--clay); }
+.log-type.restored { color: var(--sage); }
+.log-type.warn    { color: var(--brass); }
+.log-desc { color: var(--ink-dim); }
+
+/* ── ARCHIVE DISTRICT ── */
+.archive-block { margin-bottom: 24px; }
+
+.archive-version-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 20px;
+  background: var(--cream-deep);
+  border: 1px solid var(--rule);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  font-family: var(--serif); font-size: 15px; font-weight: 400;
+  color: var(--walnut-warm);
+}
+
+.archive-version-head em { font-style: italic; color: var(--oak-light); }
+.archive-version-meta {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost);
+}
+
+.archive-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 80px;
+  padding: 10px 20px;
+  border: 1px solid var(--rule-light); border-top: none;
+  align-items: center;
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-dim);
+  background: var(--linen);
+  transition: background 0.12s;
+}
+
+.archive-row:last-child { border-radius: 0 0 3px 3px; }
+.archive-row:hover { background: var(--cream-mid); }
+
+/* ── DRIVE MONITOR ── */
+.drive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px; margin-bottom: 28px;
+}
+
+.drive-card {
+  background: var(--linen);
+  border: 1px solid var(--rule-light);
+  border-radius: 3px; padding: 20px;
+  transition: all 0.2s;
+}
+
+.drive-card.has-vault { border-color: var(--brass-dim); }
+
+.drive-letter {
+  font-family: var(--serif); font-size: 32px; font-weight: 400;
+  color: var(--walnut); line-height: 1; margin-bottom: 8px;
+}
+
+.drive-status {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-dim); line-height: 1.7;
+}
+
+.drive-warning {
+  margin-top: 8px;
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--brass);
+  padding: 6px 10px;
+  background: rgba(184,137,42,0.08);
+  border-left: 2px solid var(--brass-dim);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── EMPTY STATES ── */
+.empty {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.empty-ornament {
+  width: 48px; height: 48px;
+  margin: 0 auto 18px;
+  opacity: 0.2;
+  color: var(--walnut);
+}
+
+.empty-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 400;
+  font-style: italic; color: var(--ink-mid);
+  margin-bottom: 8px;
+}
+
+.empty-body {
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.08em;
+}
+
+/* ── COMMAND MODAL ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(20,12,4,0.75);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: none; place-items: center;
+}
+.overlay.open { display: grid; animation: room-enter .18s ease; }
+
+.modal {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  width: 440px;
+  box-shadow:
+    0 40px 100px rgba(10,6,2,0.5),
+    0 0 0 1px rgba(184,137,42,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--brass-dim), var(--brass), var(--brass-dim), transparent);
+}
+
+.modal-head {
+  background: var(--cream-deep);
+  padding: 20px 28px 18px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.modal-eyebrow {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.modal-title {
+  font-family: var(--serif); font-size: 22px; font-weight: 400;
+  color: var(--walnut); line-height: 1.2;
+}
+
+.modal-title em { font-style: italic; color: var(--oak-light); }
+
+.modal-body { padding: 24px 28px; }
+
+.modal-instruction {
+  font-family: var(--body); font-size: 13px;
+  color: var(--ink-mid); line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.cmd-plate {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.cmd-plate-word {
+  font-family: var(--mono); font-size: 32px;
+  letter-spacing: 0.5em; padding-left: 0.5em;
+  color: var(--walnut);
+  display: inline-block;
+  padding: 16px 28px;
+  background: var(--cream-deep);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.cmd-plate-word.c-brass  { color: var(--brass); border-color: var(--brass-dim); background: var(--brass-glow); }
+.cmd-plate-word.c-leather { color: var(--leather-mid); border-color: rgba(107,61,46,0.25); background: rgba(107,61,46,0.05); }
+.cmd-plate-word.c-clay   { color: var(--clay); border-color: rgba(139,64,48,0.25); background: var(--clay-glow); }
+
+.cmd-hint {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.12em;
+  text-align: center; margin-bottom: 14px;
+}
+
+.cmd-input {
+  width: 100%;
+  background: var(--walnut);
+  border: 1px solid var(--walnut-warm);
+  border-radius: 2px;
+  color: var(--cream);
+  font-family: var(--mono); font-size: 18px; font-weight: 300;
+  letter-spacing: 0.35em; padding-left: 0.35em;
+  text-align: center; padding-top: 14px; padding-bottom: 14px;
+  outline: none;
+  transition: all 0.2s;
+  caret-color: var(--brass);
+  margin-bottom: 22px;
+  display: block;
+}
+
+.cmd-input:focus {
+  border-color: var(--brass-dim);
+  box-shadow: 0 0 0 2px rgba(184,137,42,0.1);
+}
+
+.cmd-input.error {
+  border-color: var(--clay);
+  animation: shake .32s ease;
+}
+
+.cmd-input.success {
+  border-color: var(--sage);
+  box-shadow: 0 0 0 2px rgba(74,103,65,0.12);
+}
+
+@keyframes shake {
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-5px);}
+  40%{transform:translateX(5px);}
+  60%{transform:translateX(-3px);}
+  80%{transform:translateX(3px);}
+}
+
+.modal-actions {
+  display: flex; gap: 10px; justify-content: flex-end;
+  padding: 16px 28px 22px;
+  border-top: 1px solid var(--rule-light);
+  background: var(--linen);
+}
+
+.modal-cancel {
+  background: transparent; border: 1px solid var(--rule);
+  color: var(--ink-dim); font-family: var(--mono);
+  font-size: 9px; font-weight: 300; letter-spacing: 0.14em;
+  padding: 9px 18px; border-radius: 2px;
+  cursor: pointer; transition: all 0.12s;
+  text-transform: uppercase;
+}
+.modal-cancel:hover { border-color: var(--rule-dark); color: var(--ink-mid); }
+
+.modal-confirm {
+  background: var(--brass-glow);
+  border: 1px solid var(--brass-dim);
+  color: var(--brass);
+  font-family: var(--mono); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 9px 22px; border-radius: 2px;
+  cursor: pointer; transition: all 0.15s;
+}
+.modal-confirm:hover { background: rgba(184,137,42,0.2); border-color: var(--brass); }
+
+.modal-danger {
+  background: var(--clay-glow);
+  border: 1px solid rgba(139,64,48,0.3);
+  color: var(--clay);
+  font-family: var(--mono); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 9px 22px; border-radius: 2px;
+  cursor: pointer; transition: all 0.15s;
+}
+.modal-danger:hover { background: rgba(139,64,48,0.2); border-color: var(--clay); }
+
+/* ── FORM ── */
+.form-group { margin-bottom: 18px; }
+
+.form-label {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-dim); letter-spacing: 0.18em;
+  text-transform: uppercase; display: block; margin-bottom: 7px;
+}
+
+.form-input {
+  width: 100%;
+  background: var(--cream-deep);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--walnut);
+  font-family: var(--body); font-size: 14px;
+  padding: 10px 13px; outline: none;
+  transition: all 0.15s;
+}
+.form-input:focus { border-color: var(--oak-light); box-shadow: 0 0 0 2px rgba(92,58,30,0.06); }
+select.form-input { cursor: pointer; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--walnut);
+  border: 1px solid var(--walnut-warm);
+  color: var(--cream);
+  font-family: var(--body); font-size: 13px;
+  padding: 13px 20px; border-radius: 3px;
+  z-index: 600; display: none;
+  animation: toast-in .2s ease;
+  box-shadow: 0 16px 48px rgba(10,6,2,0.45);
+  max-width: 380px; line-height: 1.5;
+}
+
+.toast.show { display: block; }
+
+.toast-left {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; border-radius: 3px 0 0 3px;
+}
+
+.toast .toast-left { background: var(--brass); }
+.toast.ok .toast-left { background: var(--sage); }
+.toast.bad .toast-left { background: var(--clay); }
+.toast.note .toast-left { background: var(--brass); }
+
+@keyframes toast-in { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--parchment); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rule-dark); }
+
+/* ── TUTORIAL ── */
+.tutorial {
+  position: fixed; inset: 0;
+  background: rgba(20,12,4,0.88);
+  backdrop-filter: blur(6px);
+  z-index: 700;
+  display: flex; align-items: center; justify-content: center;
+  animation: room-enter .3s ease;
+}
+
+.tutorial-card {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  width: 540px;
+  box-shadow: 0 60px 140px rgba(10,6,2,0.7), 0 0 0 1px rgba(184,137,42,0.1);
+  overflow: hidden;
+}
+
+.tutorial-head {
+  background: var(--walnut);
+  padding: 26px 36px 22px;
+  border-bottom: 2px solid var(--brass-dim);
+  position: relative;
+}
+
+.tutorial-head::after {
+  content: '';
+  position: absolute; bottom: -5px; left: 36px; right: 36px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass-dim), transparent);
+}
+
+.tutorial-progress {
+  display: flex; gap: 6px; margin-bottom: 14px;
+}
+
+.tutorial-pip {
+  height: 2px; flex: 1;
+  background: rgba(184,137,42,0.2);
+  border-radius: 1px;
+  transition: background 0.4s;
+}
+.tutorial-pip.done { background: var(--brass); }
+
+.tutorial-eyebrow {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: rgba(184,137,42,0.5); letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.tutorial-head-title {
+  font-family: var(--serif); font-size: 22px; font-weight: 400;
+  color: var(--cream); line-height: 1.2;
+}
+.tutorial-head-title em { font-style: italic; color: var(--brass-light); }
+
+.tutorial-body { padding: 28px 36px; }
+
+.tutorial-text {
+  font-family: var(--body); font-size: 14px;
+  color: var(--ink-mid); line-height: 1.75;
+  margin-bottom: 22px;
+}
+
+.tutorial-file {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px;
+  background: var(--linen);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.tutorial-file-icon { width: 20px; height: 20px; color: var(--oak-light); flex-shrink: 0; }
+.tutorial-file-name { font-family: var(--body); font-size: 14px; color: var(--walnut-warm); }
+.tutorial-file-status { margin-left: auto; }
+
+.tutorial-cmd-word {
+  font-family: var(--mono); font-size: 26px; font-weight: 300;
+  letter-spacing: 0.5em; padding-left: 0.5em;
+  text-align: center; margin-bottom: 8px;
+  display: block; color: var(--walnut);
+}
+.tutorial-cmd-word.brass   { color: var(--brass); }
+.tutorial-cmd-word.leather { color: var(--leather-mid); }
+.tutorial-cmd-word.clay    { color: var(--clay); }
+
+.tutorial-hint {
+  font-family: var(--mono); font-size: 8px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.12em;
+  text-align: center; margin-bottom: 13px;
+}
+
+.tutorial-input {
+  width: 100%;
+  background: var(--walnut);
+  border: 1px solid var(--walnut-warm);
+  border-radius: 2px;
+  color: var(--cream);
+  font-family: var(--mono); font-size: 18px; font-weight: 300;
+  letter-spacing: 0.3em; padding-left: 0.3em;
+  text-align: center; padding-top: 13px; padding-bottom: 13px;
+  outline: none; display: block;
+  transition: all 0.2s; caret-color: var(--brass);
+  margin-bottom: 4px;
+}
+.tutorial-input:focus { border-color: var(--brass-dim); box-shadow: 0 0 0 2px rgba(184,137,42,0.1); }
+.tutorial-input.error { border-color: var(--clay); animation: shake .32s ease; }
+.tutorial-input.done  { border-color: var(--sage); box-shadow: 0 0 0 2px rgba(74,103,65,0.12); }
+
+.tutorial-success {
+  font-family: var(--body); font-size: 12px; font-style: italic;
+  color: var(--sage); text-align: center;
+  height: 20px; opacity: 0;
+  transition: opacity .3s; margin-bottom: 18px;
+}
+.tutorial-success.show { opacity: 1; }
+
+.tutorial-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 36px 24px;
+}
+
+.tutorial-skip {
+  background: transparent; border: none;
+  font-family: var(--mono); font-size: 9px; font-weight: 300;
+  color: var(--ink-ghost); letter-spacing: 0.1em;
+  cursor: pointer; transition: color .15s;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.tutorial-skip:hover { color: var(--ink-dim); }
+
+.tutorial-next {
+  background: var(--brass-glow);
+  border: 1px solid var(--brass-dim);
+  color: var(--brass);
+  font-family: var(--mono); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 10px 24px; border-radius: 2px;
+  cursor: pointer; transition: all .15s;
+}
+.tutorial-next:hover { background: rgba(184,137,42,0.2); border-color: var(--brass); }
+.tutorial-next:disabled { opacity: .3; pointer-events: none; }
+
+/* ── SIDEBAR FOOT ── */
+.sidebar-foot {
+  padding: 10px 16px 14px;
+  border-top: 1px solid rgba(184,137,42,0.12);
+  background: rgba(8,3,0,0.25);
+  flex-shrink: 0;
+}
+
+.sidebar-foot-mark {
+  font-family: var(--mono);
+  font-size: 8px; font-weight: 300;
+  color: rgba(184,137,42,0.35);
+  letter-spacing: 0.1em;
+  margin-bottom: 3px;
+}
+
+.sidebar-foot-quote {
+  font-family: var(--body);
+  font-size: 10px;
+  color: rgba(244,237,224,0.18);
+  font-style: italic;
+}
+
+/* vdeco-rule */
+.vdeco-rule {
+  position: absolute;
+  left: 14px; right: 14px; top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,137,42,0.2), transparent);
+  pointer-events: none;
+}
+
+
+/* ── EXTRA: file-row with typed + browse ─────────────── */
+.form-file-row { display:flex; gap:8px; align-items:stretch; }
+.form-file-row .form-input { flex:1; }
+.btn-pick {
+  background: var(--brass-glow);
+  border: 1px solid var(--brass-dim);
+  color: var(--brass);
+  font-family: var(--mono); font-size:9px; letter-spacing:.14em;
+  padding: 10px 14px; border-radius: 2px; cursor:pointer;
+  transition: all .15s; white-space:nowrap; flex-shrink:0;
+}
+.btn-pick:hover { background:rgba(184,137,42,.2); border-color:var(--brass); }
+
+/* ── EXTRA: spinner for async loads ─────────────────── */
+.spinner { display:inline-block; width:14px; height:14px;
+  border:2px solid var(--rule); border-top-color:var(--brass);
+  border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+</style>
+<body>
+
+<!-- ════════════════════════════════════════ TUTORIAL -->
+<div class="tutorial" id="tutorial">
+  <div class="tutorial-card">
+    <div class="tutorial-head">
+      <div class="tutorial-progress">
+        <div class="tutorial-pip" id="tp0"></div>
+        <div class="tutorial-pip" id="tp1"></div>
+        <div class="tutorial-pip" id="tp2"></div>
+        <div class="tutorial-pip" id="tp3"></div>
+      </div>
+      <div class="tutorial-eyebrow" id="tut-eyebrow">Introduction</div>
+      <div class="tutorial-head-title" id="tut-title">Welcome to <em>Iteration Wallet.</em></div>
+    </div>
+
+    <!-- Step 0: welcome -->
+    <div id="tut-step-0">
+      <div class="tutorial-body">
+        <p class="tutorial-text">
+          Before you protect anything real, spend two minutes here.<br><br>
+          There are three commands — <strong>OPEN</strong>, <strong>REMOVE</strong>, <strong>DELETE</strong>.<br>
+          You will practise each one on a file that does not exist.<br><br>
+          Nothing destructive can happen without you typing the word yourself,<br>
+          one character at a time, in your own time.
+        </p>
+      </div>
+      <div class="tutorial-foot">
+        <button class="tutorial-skip" onclick="exitTutorial()">Skip — I understand how this works</button>
+        <button class="tutorial-next" onclick="tutAdvance(1)">Begin →</button>
+      </div>
+    </div>
+
+    <!-- Step 1: OPEN -->
+    <div id="tut-step-1" style="display:none">
+      <div class="tutorial-body">
+        <p class="tutorial-text">Nothing moves inside the Vault until you unlock it. Type <strong>OPEN</strong> to unlock the practice vault below.</p>
+        <div class="tutorial-file">
+          <svg class="tutorial-file-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 2h8.5L16 5.5V18H4V2z"/><path d="M12 2v4h4"/></svg>
+          <span class="tutorial-file-name">practice_document.txt</span>
+          <span class="tutorial-file-status"><span class="chip chip-safe">● Protected</span></span>
+        </div>
+        <span class="tutorial-cmd-word brass">OPEN</span>
+        <div class="tutorial-hint">Type it below — no paste, no autofill</div>
+        <input class="tutorial-input" id="ti1" type="text" autocomplete="off" spellcheck="false" maxlength="6" placeholder="type here...">
+        <div class="tutorial-success" id="ts1">✓ Vault opened. The file is now accessible.</div>
+      </div>
+      <div class="tutorial-foot">
+        <button class="tutorial-skip" onclick="exitTutorial()">Skip</button>
+        <button class="tutorial-next" id="tn1" onclick="tutAdvance(2)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: REMOVE -->
+    <div id="tut-step-2" style="display:none">
+      <div class="tutorial-body">
+        <p class="tutorial-text">REMOVE takes the file out of the Vault into a holding area. It still exists. You can still change your mind. Type <strong>REMOVE</strong>.</p>
+        <div class="tutorial-file">
+          <svg class="tutorial-file-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 2h8.5L16 5.5V18H4V2z"/><path d="M12 2v4h4"/></svg>
+          <span class="tutorial-file-name">practice_document.txt</span>
+          <span class="tutorial-file-status"><span class="chip chip-safe">● Protected</span></span>
+        </div>
+        <span class="tutorial-cmd-word leather">REMOVE</span>
+        <div class="tutorial-hint">Type it below — character by character</div>
+        <input class="tutorial-input" id="ti2" type="text" autocomplete="off" spellcheck="false" maxlength="8" placeholder="type here...">
+        <div class="tutorial-success" id="ts2">✓ File moved to holding. Still recoverable.</div>
+      </div>
+      <div class="tutorial-foot">
+        <button class="tutorial-skip" onclick="exitTutorial()">Skip</button>
+        <button class="tutorial-next" id="tn2" onclick="tutAdvance(3)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: DELETE -->
+    <div id="tut-step-3" style="display:none">
+      <div class="tutorial-body">
+        <p class="tutorial-text">DELETE is permanent. A file must be REMOVEd before it can be deleted — two deliberate decisions, not one. This practice file is not real. Nothing is actually deleted.</p>
+        <div class="tutorial-file" style="opacity:.55">
+          <svg class="tutorial-file-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 2h8.5L16 5.5V18H4V2z"/><path d="M12 2v4h4"/></svg>
+          <span class="tutorial-file-name">practice_document.txt</span>
+          <span class="tutorial-file-status"><span class="chip chip-staging">● Holding</span></span>
+        </div>
+        <span class="tutorial-cmd-word clay">DELETE</span>
+        <div class="tutorial-hint">Type it — feel the weight of it</div>
+        <input class="tutorial-input" id="ti3" type="text" autocomplete="off" spellcheck="false" maxlength="8" placeholder="type here...">
+        <div class="tutorial-success" id="ts3">✓ Done. You know how the Vault works.</div>
+      </div>
+      <div class="tutorial-foot">
+        <button class="tutorial-skip" onclick="exitTutorial()">Skip</button>
+        <button class="tutorial-next" id="tn3" onclick="tutAdvance(4)" disabled>Continue →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Done -->
+    <div id="tut-step-4" style="display:none">
+      <div class="tutorial-body">
+        <p class="tutorial-text">
+          Three commands. That is the complete system.<br><br>
+          <strong>OPEN</strong> — unlock the Vault for a session<br>
+          <strong>REMOVE</strong> — move a file to holding<br>
+          <strong>DELETE</strong> — permanently remove (requires REMOVE first)<br><br>
+          Nothing happens to your files until you decide it should.<br>
+          Not an AI tool. Not a sync service. Not ransomware. Nothing.
+        </p>
+      </div>
+      <div class="tutorial-foot">
+        <span></span>
+        <button class="tutorial-next" onclick="exitTutorial()">Enter your Vault →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ APP -->
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <a class="logo" href="#">
+      <div class="logo-lockup">
+        <svg viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="7" width="16" height="12" rx="1.5" stroke="#B8892A" stroke-width="1.3"/>
+          <path d="M6.5 7V5.5a3.5 3.5 0 017 0V7" stroke="#B8892A" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="10" cy="13" r="2.2" stroke="#B8892A" stroke-width="1.3"/>
+          <line x1="10" y1="15.2" x2="10" y2="17.5" stroke="#B8892A" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Iteration Wallet</span>
+        <span class="logo-estate">Rear View Foresight</span>
+      </div>
+    </a>
+
+    <div class="header-divider"></div>
+    <div class="header-tagline">Let find something right where you left it.</div>
+
+    <div class="header-right">
+      <div class="watcher-row">
+        <div class="heartbeat">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span>Watcher active</span>
+      </div>
+
+      <div class="vault-lock" id="vaultLock">
+        <svg class="vault-lock-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3">
+          <rect x="1" y="5.5" width="12" height="8" rx="1" id="lock-body"/>
+          <path d="M4 5.5V4a3 3 0 016 0v1.5" id="lock-shackle"/>
+          <circle cx="7" cy="9.5" r="1.5" fill="currentColor" stroke="none"/>
+          <line x1="7" y1="11" x2="7" y2="12.5" stroke="currentColor" stroke-linecap="round"/>
+        </svg>
+        <span class="vault-lock-text" id="lockText">Vault Locked</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+  <div class="sidebar-scroll">
+
+    <!-- ┌─────────────────────────────────────┐ -->
+    <!-- │  TOP-LEVEL VERTICAL NAV             │ -->
+    <!-- └─────────────────────────────────────┘ -->
+
+    <!-- DASHBOARD — no submenu -->
+    <div class="vn-station" id="vns-dash">
+      <div class="vn-btn" onclick="vnGo('dash','vns-dash')">
+        <div class="vn-ico">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <rect x="1" y="1" width="6.2" height="6.2" rx="1.2"/>
+            <rect x="8.8" y="1" width="6.2" height="6.2" rx="1.2"/>
+            <rect x="1" y="8.8" width="6.2" height="6.2" rx="1.2"/>
+            <rect x="8.8" y="8.8" width="6.2" height="6.2" rx="1.2"/>
+          </svg>
+        </div>
+        <span class="vn-lbl">Dashboard</span>
+      </div>
+    </div>
+
+    <!-- FILES — expandable -->
+    <div class="vn-station vn-has-sub" id="vns-files">
+      <div class="vn-btn" onclick="vnToggle('vns-files')">
+        <div class="vn-ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 3.5h4.5l2 2.5H14v8.5H2z" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="vn-lbl">Files</span>
+        <svg class="vn-arr" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="vn-sub" id="vsub-files">
+        <div class="vn-sub-btn" id="vsb-allfiles" onclick="vnGo('files','vns-files','vsb-allfiles')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 2h4l1.5 2H11v7H1z"/></svg>
+          All Folders
+        </div>
+        <div class="vn-sub-btn vn-sandbox-btn" id="vsb-sandbox" onclick="vnGo('sandbox','vns-files','vsb-sandbox')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="2.5" width="10" height="8" rx="1"/><path d="M3.5 2.5V1.5h5v1"/><line x1="6" y1="5" x2="6" y2="9"/><line x1="4" y1="7" x2="8" y2="7"/></svg>
+          Sandbox
+          <span class="vn-chip vn-chip-safe">safe zone</span>
+        </div>
+        <div class="vn-sub-btn vn-contender-btn" id="vsb-contender" onclick="vnGo('contender','vns-files','vsb-contender')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><polygon points="6,1 7.8,4.5 12,5.2 9,8.1 9.7,12 6,10.1 2.3,12 3,8.1 0,5.2 4.2,4.5"/></svg>
+          Contender
+          <span class="vn-chip vn-chip-brass" id="contenderAlert" style="display:none">!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS — expandable -->
+    <div class="vn-station vn-has-sub" id="vns-projects">
+      <div class="vn-btn" onclick="vnToggle('vns-projects')">
+        <div class="vn-ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 5.5h12v9H2z"/><path d="M2 5.5l3-4h6l3 4"/>
+          </svg>
+        </div>
+        <span class="vn-lbl">Projects</span>
+        <span class="vn-count" id="badgeProjects">0</span>
+        <svg class="vn-arr" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="vn-sub" id="vsub-projects">
+        <div class="vn-sub-btn" id="vsb-projects" onclick="vnGo('projects','vns-projects','vsb-projects')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 4h10v7H1z"/><path d="M1 4l2.5-3h5L11 4"/></svg>
+          Cradle Projects
+        </div>
+        <div class="vn-sub-btn" id="vsb-archive" onclick="vnGo('archive','vns-projects','vsb-archive')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="1.5" width="10" height="9" rx="1"/><line x1="1" y1="5.5" x2="11" y2="5.5"/><line x1="4" y1="8.5" x2="8" y2="8.5"/></svg>
+          Archive District
+        </div>
+      </div>
+    </div>
+
+    <!-- MONITOR — expandable -->
+    <div class="vn-station vn-has-sub" id="vns-monitor">
+      <div class="vn-btn" onclick="vnToggle('vns-monitor')">
+        <div class="vn-ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <ellipse cx="8" cy="4.5" rx="6" ry="2.2"/>
+            <path d="M2 4.5v7c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2v-7"/>
+            <line x1="2" y1="9" x2="14" y2="9"/>
+          </svg>
+        </div>
+        <span class="vn-lbl">Monitor</span>
+        <svg class="vn-arr" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="vn-sub" id="vsub-monitor">
+        <div class="vn-sub-btn" id="vsb-drives" onclick="vnGo('drives','vns-monitor','vsb-drives')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><ellipse cx="6" cy="3" rx="5" ry="1.8"/><path d="M1 3v6c0 1 2.2 1.8 5 1.8s5-.8 5-1.8V3"/><line x1="1" y1="7" x2="11" y2="7"/></svg>
+          Drive Monitor
+        </div>
+        <div class="vn-sub-btn" id="vsb-log" onclick="vnGo('log','vns-monitor','vsb-log')">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><line x1="2" y1="3" x2="10" y2="3"/><line x1="2" y1="6" x2="10" y2="6"/><line x1="2" y1="9" x2="7" y2="9"/></svg>
+          Event Log
+          <span class="vn-chip vn-chip-brass" id="badgeLog">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="vn-flex"></div>
+
+  </div><!-- /sidebar-scroll -->
+
+  <!-- ═══════════════════════════════
+       VAULT BUTTON — the big one
+  ═══════════════════════════════════ -->
+  <div class="vault-dock">
+    <button class="vault-dock-btn" id="vaultDockBtn" onclick="vnGo('vault','vns-vault')">
+      <!-- Corner deco marks -->
+      <span class="vdeco vdeco-tl"></span>
+      <span class="vdeco vdeco-tr"></span>
+      <span class="vdeco vdeco-bl"></span>
+      <span class="vdeco vdeco-br"></span>
+      <!-- Horizontal rule above word -->
+      <span class="vdeco-rule"></span>
+      <div class="vault-dock-inner">
+        <svg class="vault-dock-icon" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="8.5" width="20" height="13.5" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M7 8.5V6a5 5 0 0110 0v2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="15.5" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+          <line x1="12" y1="18" x2="12" y2="20.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="vault-dock-word">VAULT</span>
+      </div>
+      <span class="vault-dock-status" id="vaultDockStatus">● Locked</span>
+    </button>
+  </div>
+
+  <!-- JS id compatibility shims -->
+  <span id="nav-vault" style="display:none"></span>
+  <span id="nav-projects" style="display:none"></span>
+  <span id="badgeFiles" style="display:none">0</span>
+  <span id="btnOpen" style="display:none"></span>
+  <span id="vaultCommandsPanel" style="display:none"></span>
+  <span id="vaultDivider" style="display:none"></span>
+
+  <div class="sidebar-foot">
+    <div class="sidebar-foot-mark">Iteration Wallet v4.0 · Rear View Foresight LLC</div>
+    <div class="sidebar-foot-quote">"Feic Mo Chroí — See My Heart"</div>
+  </div>
+</nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dash">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Your <em>Vault</em></div>
+          <div class="view-sub">// Dashboard</div>
+        </div>
+        <div class="view-action">
+          <button class="btn btn-brass" onclick="showModal('newProject')">+ New Cradle</button>
+        </div>
+      </div>
+
+      <div class="estate-status" id="estateBar">
+        <div class="estate-status-item">
+          <div class="estate-status-label">Vault Status</div>
+          <div class="estate-status-value locked" id="barStatus">● Locked — all files protected</div>
+        </div>
+        <div class="estate-status-item">
+          <div class="estate-status-label">File Watcher</div>
+          <div class="estate-status-value running">● Running — integrity checks active</div>
+        </div>
+        <div class="estate-status-item">
+          <div class="estate-status-label">Last verified</div>
+          <div class="estate-status-value running" id="lastCheck">—</div>
+        </div>
+        <button class="estate-open-btn" id="barBtn" onclick="triggerCmd('OPEN')">Open Vault</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-number" id="sCradles">0</div>
+          <div class="stat-label">Cradle Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="sProtected">0</div>
+          <div class="stat-label">Protected Files</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="sArchived">0</div>
+          <div class="stat-label">Archived Versions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="sEvents">0</div>
+          <div class="stat-label">Vault Events</div>
+        </div>
+      </div>
+
+      <div class="sec-head">
+        <div class="sec-name">Recent <em>projects</em></div>
+        <span class="sec-action" onclick="vnGo('projects','nav-projects',null)">View all →</span>
+      </div>
+      <div class="projects-grid" id="dashProjects"></div>
+
+      <div class="sec-head" style="margin-top:4px">
+        <div class="sec-name">Recent <em>activity</em></div>
+      </div>
+      <div class="log-wrap">
+        <div class="log-header">Event record <span id="logCount">0 entries</span></div>
+        <div class="log-entries" id="dashLog"></div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="view" id="view-projects">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Cradle <em>Projects</em></div>
+          <div class="view-sub">// Protected workspaces</div>
+        </div>
+        <div class="view-action">
+          <button class="btn btn-brass" onclick="showModal('newProject')">+ New Cradle</button>
+        </div>
+      </div>
+      <div class="projects-grid" id="allProjects"></div>
+    </div>
+
+    <!-- VAULT FILES -->
+    <div class="view" id="view-vault">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Vault <em>Files</em></div>
+          <div class="view-sub">// All protected files</div>
+        </div>
+        <div class="view-action">
+          <button class="btn btn-brass" onclick="showModal('addFile')">+ Add File</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <span>File Name</span>
+          <span>Project</span>
+          <span>Version</span>
+          <span>Status</span>
+          <span></span>
+        </div>
+        <div id="vaultFileRows"></div>
+      </div>
+    </div>
+
+    <!-- FILES — General browser, all cradle folders ─────────── -->
+    <div class="view" id="view-files">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Your <em>Files</em></div>
+          <div class="view-sub">// All cradle folders — outside the vault</div>
+        </div>
+        <div class="view-action">
+          <button class="btn btn-brass" onclick="showModal('newProject')">+ New Cradle</button>
+        </div>
+      </div>
+      <p style="font-family:var(--body);font-size:13.5px;color:var(--ink-mid);line-height:1.75;max-width:520px;margin-bottom:28px;">
+        Each folder here belongs to a Cradle. Files in these folders are accessible freely. Files inside the Vault require the vault to be opened first.
+      </p>
+      <div class="sec-head">
+        <div class="sec-name">Cradle <em>folders</em></div>
+        <span class="sec-action" onclick="vnGo('projects','nav-projects',null)">View cradles →</span>
+      </div>
+      <div class="projects-grid" id="filesGrid"></div>
+    </div>
+
+    <!-- ARCHIVE DISTRICT -->
+    <div class="view" id="view-archive">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Archive <em>District</em></div>
+          <div class="view-sub">// Historical versions — fully protected</div>
+        </div>
+      </div>
+      <div id="archiveBody"></div>
+    </div>
+
+    <!-- DRIVE MONITOR -->
+    <div class="view" id="view-drives">
+  <div style="display:none"><span id="watcherTs"></span></div>
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Drive <em>Monitor</em></div>
+          <div class="view-sub">// Detection — not prevention</div>
+        </div>
+      </div>
+      <p style="font-family:var(--body);font-size:13px;color:var(--ink-mid);line-height:1.7;max-width:560px;margin-bottom:28px;">
+        The Drive Monitor tells you which drives carry Vault data. If a drive containing your Vault is about to be formatted or erased, you will see a clear warning here first. The system detects — it is your decision to act.
+      </p>
+      <div class="sec-head"><div class="sec-name">Connected <em>drives</em></div></div>
+      <div class="drive-grid" id="driveGrid"></div>
+
+      <div class="sec-head"><div class="sec-name">Staging <em>area</em></div></div>
+      <div class="table-wrap">
+        <div class="table-head" style="grid-template-columns:2fr 1fr 1fr 100px">
+          <span>File</span><span>Project</span><span>Removed</span><span>Auto-purge</span>
+        </div>
+        <div id="stagingBody"></div>
+      </div>
+    </div>
+
+    <!-- EVENT LOG -->
+    <div class="view" id="view-log">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Event <em>Log</em></div>
+          <div class="view-sub">// Complete audit record</div>
+        </div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--ink-ghost);" id="fullLogMeta"></span>
+      </div>
+      <div class="log-wrap">
+        <div class="log-header">Vault record <span id="fullLogCount"></span></div>
+        <div class="log-entries" id="fullLog" style="max-height:calc(100vh - 260px)"></div>
+      </div>
+    </div>
+
+
+    <!-- SANDBOX -->
+    <div class="view" id="view-sandbox">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Sandbox <em>Area</em></div>
+          <div class="view-sub">// Safe zone — experiment freely</div>
+        </div>
+        <div class="view-action">
+          <button class="btn btn-brass" onclick="showModal('newProject')">+ New Cradle</button>
+        </div>
+      </div>
+      <p style="font-family:var(--body);font-size:13.5px;color:var(--ink-mid);line-height:1.75;max-width:520px;margin-bottom:28px;">
+        The Sandbox is your safe zone. Nothing here touches the Vault. Drag files in, make changes, and promote when ready.
+      </p>
+      <div class="sec-head"><div class="sec-name">Cradle <em>folders</em></div></div>
+      <div class="projects-grid" id="sandboxGrid"></div>
+    </div>
+
+    <!-- CONTENDER -->
+    <div class="view" id="view-contender">
+      <div class="view-heading">
+        <div>
+          <div class="view-title">Contender <em>Files</em></div>
+          <div class="view-sub">// Candidates for the Vault</div>
+        </div>
+      </div>
+      <p style="font-family:var(--body);font-size:13.5px;color:var(--ink-mid);line-height:1.75;max-width:520px;margin-bottom:28px;">
+        Contenders are improved versions waiting to be promoted into the Vault. Review carefully before promoting.
+      </p>
+      <div class="table-wrap">
+        <div class="table-head">
+          <span>File Name</span><span>Project</span><span>Version</span><span>Status</span><span></span>
+        </div>
+        <div id="contenderRows"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════ COMMAND MODAL -->
+<div class="overlay" id="cmdOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-eyebrow">Vault command required</div>
+      <div class="modal-title" id="cmdModalTitle">Open the <em>Vault</em></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-instruction" id="cmdModalInstr"></p>
+      <div class="cmd-plate">
+        <span class="cmd-plate-word" id="cmdPlateWord">OPEN</span>
+      </div>
+      <div class="cmd-hint">Type the command above — no paste, no autofill, your own pace</div>
+      <input class="cmd-input" id="cmdIn" type="text" autocomplete="off" spellcheck="false" maxlength="10" placeholder="type here...">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('cmdOverlay')">Cancel</button>
+      <button class="modal-confirm" id="cmdConfirm" onclick="submitCmd()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ NEW PROJECT MODAL -->
+<div class="overlay" id="newProjectOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-eyebrow">New workspace</div>
+      <div class="modal-title">Create a <em>Cradle</em></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-instruction">Name your project and point it at a folder. Everything in that folder will be tracked against your Vault master copies.</p>
+      <div class="form-group">
+        <label class="form-label">Project Name</label>
+        <input class="form-input" id="npName" placeholder="My Novel  ·  Tax 2025  ·  Music Project">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Root Folder</label>
+        <input class="form-input" id="npPath" placeholder="C:\Users\...\MyProject">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('newProjectOverlay')">Cancel</button>
+      <button class="modal-confirm" onclick="createProject()">Create Cradle</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ ADD FILE MODAL -->
+<div class="overlay" id="addFileOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-eyebrow">Protect a file</div>
+      <div class="modal-title">Add to the <em>Vault</em></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-instruction">A protected copy and a restoration backup will both be stored. The original is left where it is.</p>
+      <div class="form-group">
+        <label class="form-label">File Path</label>
+        <input class="form-input" id="afPath" placeholder="C:\Users\...\document.docx">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cradle Project</label>
+        <select class="form-input" id="afProject"><option value="">Select a project...</option></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('addFileOverlay')">Cancel</button>
+      <button class="modal-confirm" onclick="addFile()">Add to Vault</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toastEl"><div class="toast-left"></div><span id="toastMsg"></span></div>
+
+<!-- ════════════════════════════════════════ ADD FILE MODAL -->
+<div class="overlay" id="addFileOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-eyebrow">Protect a file</div>
+      <div class="modal-title">Add to the <em>Vault</em></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-instruction">A protected copy and a restoration backup will both be stored. The original file is left exactly where it is.</p>
+      <div class="form-group">
+        <label class="form-label">File Path — type or browse</label>
+        <div class="form-file-row">
+          <input class="form-input" id="afPath" placeholder="C:\Users\...\document.docx">
+          <button class="btn-pick" onclick="pickFile()">Browse…</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cradle Project</label>
+        <select class="form-input" id="afProject"><option value="">Select a project...</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Version Label</label>
+        <input class="form-input" id="afVersion" value="V1" placeholder="V1">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('addFileOverlay')">Cancel</button>
+      <button class="modal-confirm" onclick="addFile()">Add to Vault</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ PROMOTE VERSION MODAL -->
+<div class="overlay" id="promoteOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-eyebrow">Version management</div>
+      <div class="modal-title">Promote <em>Version</em></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-instruction" id="promoteInstr">Archive the current version and promote to a new one. Current files move to Archive District and are fully protected.</p>
+      <div class="form-group">
+        <label class="form-label">New Version Name</label>
+        <input class="form-input" id="promoteNewVer" placeholder="V2  ·  V5.1  ·  Release_Candidate">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('promoteOverlay')">Cancel</button>
+      <button class="modal-confirm" onclick="submitPromote()">Promote</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ═══════════════════════════════════════════════════════════
+   ITERATION WALLET — WIRED JS
+   Every operation calls vault_engine_v3 via window.pywebview.api
+   No fake data. No in-memory simulation of vault state.
+   Local state mirrors what the engine reports — nothing more.
+   © 2025 Rear View Foresight LLC — Josie Curtsey Cobbley
+   ═══════════════════════════════════════════════════════════ */
+
+// ─── Live state (mirrors engine) ────────────────────────────
+const S = {
+  vaultOpen:     false,
+  projects:      [],   // cradle_projects rows
+  files:         [],   // vault_files rows (non-archived, protected + removed)
+  archivedFiles: [],   // vault_files rows where is_archive = 1
+  events:        [],   // vault_events rows
+  stats:         { projects:0, protected:0, archived:0, events:0 },
+  drives:        [],
+  // transient UI
+  pendingCmd:    null, // { cmd, fileId }
+  pendingProject: null,
+  ks:            [],   // keystroke timestamps for current cmd session
+  lastLen:       0,
+  _modalLocked:  false, // mutex: only one command modal at a time
+};
+
+const MIN_MS = 50, MAX_MS = 10000;
+
+// Safe reference to the pywebview API
+function API() {
+  if (!window.pywebview || !window.pywebview.api) {
+    toast("Engine not connected. Is app.py running?", "bad");
+    return null;
+  }
+  return window.pywebview.api;
+}
+
+/* ═══════════════════════════════════════════
+   TUTORIAL  (no engine calls — practice only)
+   ═══════════════════════════════════════════ */
+const TUT_STEPS = [
+  { eyebrow:"Introduction", title:"Welcome to <em>Iteration Wallet.</em>" },
+  { eyebrow:"Step 1 of 3",  title:"<em>Open</em> the Vault" },
+  { eyebrow:"Step 2 of 3",  title:"<em>Remove</em> a file" },
+  { eyebrow:"Step 3 of 3",  title:"<em>Delete</em> a file" },
+  { eyebrow:"Complete",     title:"You know the <em>Vault.</em>" },
+];
+let tutStep = 0;
+
+function tutAdvance(n) {
+  document.getElementById(`tut-step-${tutStep}`).style.display = "none";
+  tutStep = n;
+  document.getElementById(`tut-step-${tutStep}`).style.display = "";
+  const s = TUT_STEPS[tutStep];
+  document.getElementById("tut-eyebrow").textContent = s.eyebrow;
+  document.getElementById("tut-title").innerHTML    = s.title;
+  for (let i = 0; i < 4; i++)
+    document.getElementById(`tp${i}`).className = "tutorial-pip" + (i < tutStep ? " done" : "");
+}
+
+function wireTutInput(n, cmd) {
+  const inp = document.getElementById(`ti${n}`);
+  const msg = document.getElementById(`ts${n}`);
+  const btn = document.getElementById(`tn${n}`);
+  let ks = [];
+  inp.addEventListener("paste", e => e.preventDefault());
+  inp.addEventListener("keydown", e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "v") { e.preventDefault(); return; }
+    const now = Date.now();
+    if (ks.length && now - ks[ks.length-1] < MIN_MS) {
+      inp.classList.add("error");
+      setTimeout(() => inp.classList.remove("error"), 400);
+      inp.value = ""; ks = []; return;
+    }
+    ks.push(now);
+  });
+  inp.addEventListener("input", () => {
+    inp.value = inp.value.toUpperCase().replace(/[^A-Z]/g, "");
+    if (inp.value === cmd) {
+      inp.classList.add("done"); msg.classList.add("show"); btn.disabled = false;
+    } else {
+      inp.classList.remove("done"); msg.classList.remove("show"); btn.disabled = true;
+    }
+  });
+}
+wireTutInput(1, "OPEN");
+wireTutInput(2, "REMOVE");
+wireTutInput(3, "DELETE");
+
+function exitTutorial() {
+  document.getElementById("tutorial").style.display = "none";
+  init();
+}
+
+/* ═══════════════════════════════════════════
+   INIT — load full state from engine on boot
+   ═══════════════════════════════════════════ */
+async function init() {
+  const api = API(); if (!api) return;
+  try {
+    const res = await api.get_all_state();
+    if (!res.ok) { toast("Failed to load vault: " + res.error, "bad"); return; }
+    applyState(res.data);
+    startWatcher();
+  } catch(e) {
+    toast("Engine error on init: " + String(e), "bad");
+    console.error(e);
+  }
+}
+
+function applyState(data) {
+  S.vaultOpen     = data.vault_open  || false;
+  S.projects      = data.projects    || [];
+  S.files         = (data.files      || []).filter(f => !f.is_archive);
+  S.archivedFiles = (data.files      || []).filter(f =>  f.is_archive);
+  S.events        = data.events      || [];
+  S.stats         = data.stats       || S.stats;
+  S.drives        = data.drives      || [];
+  setOpen(S.vaultOpen);
+  renderAll();
+}
+
+async function refresh() {
+  const api = API(); if (!api) return;
+  try {
+    const res = await api.get_all_state();
+    if (res.ok) applyState(res.data);
+  } catch(e) { console.error("refresh failed:", e); }
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════ */
+function vnGo(id, stationId, subBtnId) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  const view = document.getElementById("view-" + id);
+  if (view) view.classList.add("active");
+
+  document.querySelectorAll(".vn-station").forEach(s => s.classList.remove("vn-active","vn-parent","vn-open"));
+  if (stationId) {
+    const st = document.getElementById(stationId);
+    if (st) { st.classList.add("vn-active", "vn-open"); }
+  }
+  document.querySelectorAll(".vn-sub-btn").forEach(b => b.classList.remove("vn-active"));
+  if (subBtnId) { const sb = document.getElementById(subBtnId); if(sb) sb.classList.add("vn-active"); }
+
+  const vd = document.getElementById("vaultDockBtn");
+  if (vd) id === "vault" ? vd.classList.add("vault-open") : vd.classList.remove("vault-open");
+
+  // Render the target view
+  if (id === "files")     renderFiles();
+  if (id === "vault")     renderVaultFiles();
+  if (id === "archive")   renderArchive();
+  if (id === "log")       renderFullLog();
+  if (id === "drives")    renderDrives();
+  if (id === "contender") renderContender();
+  if (id === "dash")      renderAll();
+  if (id === "projects")  projectCards("allProjects");
+}
+
+function vnToggle(stationId) {
+  const station = document.getElementById(stationId);
+  if (!station) return;
+  const isOpen = station.classList.contains("vn-open");
+  document.querySelectorAll(".vn-station").forEach(s => s.classList.remove("vn-open"));
+  if (!isOpen) station.classList.add("vn-open");
+}
+
+/* ═══════════════════════════════════════════
+   VAULT STATE
+   ═══════════════════════════════════════════ */
+function setOpen(open) {
+  S.vaultOpen = open;
+  const lock  = document.getElementById("vaultLock");
+  const ltxt  = document.getElementById("lockText");
+  const bar   = document.getElementById("barStatus");
+  const btn   = document.getElementById("barBtn");
+  const dock  = document.getElementById("vaultDockStatus");
+  const dockBtn = document.getElementById("vaultDockBtn");
+
+  if (open) {
+    lock.classList.add("open");
+    ltxt.textContent = "Vault Open";
+    bar.className = "estate-status-value open";
+    bar.textContent = "● Open — vault accessible";
+    btn.textContent = "Lock Vault";
+    btn.className = "estate-open-btn lock";
+    btn.onclick = doLockVault;
+    dock.textContent = "● Open";
+    dockBtn.classList.add("vault-open");
+  } else {
+    lock.classList.remove("open");
+    ltxt.textContent = "Vault Locked";
+    bar.className = "estate-status-value locked";
+    bar.textContent = "● Locked — all files protected";
+    btn.textContent = "Open Vault";
+    btn.className = "estate-open-btn";
+    btn.onclick = () => triggerCmd("OPEN");
+    dock.textContent = "● Locked";
+    dockBtn.classList.remove("vault-open");
+  }
+}
+
+async function doLockVault() {
+  const api = API(); if (!api) return;
+  await api.lock_vault();
+  setOpen(false);
+  toast("Vault locked.", "note");
+  await refresh();
+}
+
+/* ═══════════════════════════════════════════
+   COMMAND ENFORCEMENT
+   Every keystroke is reported to the Python
+   CommandEnforcer in vault_engine_v3.
+   The engine validates timing and content.
+   The UI cannot bypass this.
+   ═══════════════════════════════════════════ */
+const CMD_DEF = {
+  OPEN:   { title:"Open the <em>Vault</em>",
+            instr:"The Vault must be manually unlocked before any file can be moved.",
+            plate:"c-brass",   btnClass:"modal-confirm", btnLabel:"Open Vault" },
+  REMOVE: { title:"<em>Remove</em> a file from the Vault",
+            instr:"The file will move to a holding area. It still exists. You can still recover it.",
+            plate:"c-leather", btnClass:"modal-confirm", btnLabel:"Remove File" },
+  DELETE: { title:"<em>Delete</em> this file",
+            instr:"The file will be permanently destroyed. This cannot be undone. The file must be Removed first.",
+            plate:"c-clay",    btnClass:"modal-danger",  btnLabel:"Delete Forever" },
+  RELEASE:{ title:"<em>Release</em> from Vault",
+            instr:"The file physically moves OUT of the vault into your project folder. The vault slot will be empty. This is permanent.",
+            plate:"c-clay",    btnClass:"modal-danger",  btnLabel:"Release File" },
+  ARCHIVE:       { title:"<em>Archive</em> this file",
+                   instr:"The file moves from the active Vault to the Vault Archive. It stays inside the vault, still protected.",
+                   plate:"c-leather", btnClass:"modal-confirm", btnLabel:"Move to Archive",
+                   typedWord:"ARCHIVE" },
+  REMOVE_ARCHIVE:{ title:"<em>Remove</em> from Archive",
+                   instr:"The file moves OUT of the vault archive into your project folder. The archive slot will be empty.",
+                   plate:"c-clay",    btnClass:"modal-danger",  btnLabel:"Remove from Archive",
+                   typedWord:"REMOVE" },
+};
+
+const cmdIn = document.getElementById("cmdIn");
+
+cmdIn.addEventListener("paste", e => {
+  e.preventDefault();
+  toast("Type the command — paste is blocked.", "bad");
+  shake(cmdIn);
+});
+
+cmdIn.addEventListener("keydown", async e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "v") { e.preventDefault(); return; }
+  if (e.key === "Enter") { submitCmd(); return; }
+
+  const now = Date.now();
+  if (S.ks.length) {
+    const gap = now - S.ks[S.ks.length-1];
+    if (gap > MAX_MS) {
+      toast("Session timed out — start again.", "note");
+      cmdIn.value = ""; S.lastLen = 0; S.ks = [];
+      const api = API(); if (api) await api.reset_enforcer();
+      return;
+    }
+  }
+
+  // Report each typed character to the Python enforcer
+  if (e.key.length === 1 && /[A-Za-z]/.test(e.key)) {
+    const api = API();
+    if (api) {
+      const kr = await api.record_keystroke(e.key.toUpperCase());
+      if (!kr.ok) {
+        toast(kr.error, "bad");
+        cmdIn.value = ""; S.lastLen = 0; S.ks = [];
+        shake(cmdIn); return;
+      }
+    }
+  }
+  S.ks.push(now);
+});
+
+cmdIn.addEventListener("input", () => {
+  // Block paste-by-increments
+  if (cmdIn.value.length - S.lastLen > 1) {
+    cmdIn.value = cmdIn.value.slice(0, S.lastLen);
+    toast("Paste blocked. Type the command.", "bad");
+    shake(cmdIn);
+  }
+  cmdIn.value = cmdIn.value.toUpperCase().replace(/[^A-Z]/g, "");
+  S.lastLen = cmdIn.value.length;
+});
+
+async function triggerCmd(cmd, fileId = null) {
+  // Modal mutex — prevent concurrent command sessions
+  if (S._modalLocked) {
+    toast("A command is already in progress. Close it first.", "note");
+    return;
+  }
+  S._modalLocked = true;
+  S.pendingCmd = { cmd, fileId };
+  S.ks = []; cmdIn.value = ""; S.lastLen = 0;
+  // Reset enforcer at OPEN — clears any stale state from previous session
+  const api = API(); if (api) await api.reset_enforcer();
+
+  const c = CMD_DEF[cmd];
+  document.getElementById("cmdModalTitle").innerHTML = c.title;
+  document.getElementById("cmdModalInstr").textContent = c.instr;
+  const plate = document.getElementById("cmdPlateWord");
+  plate.textContent = (c && c.typedWord) ? c.typedWord : cmd;
+  plate.className = "cmd-plate-word " + c.plate;
+  const conf = document.getElementById("cmdConfirm");
+  conf.className = c.btnClass;
+  conf.textContent = c.btnLabel;
+  document.getElementById("cmdOverlay").classList.add("open");
+  setTimeout(() => cmdIn.focus(), 80);
+}
+
+async function submitCmd() {
+  const { cmd, fileId } = S.pendingCmd;
+  const c = CMD_DEF[cmd];
+  const expectedWord = (c && c.typedWord) ? c.typedWord : cmd;
+  const typed = cmdIn.value.trim();
+  if (typed !== expectedWord) { shake(cmdIn); toast(`Type exactly "${expectedWord}".`, "bad"); return; }
+  if (S.ks.length < expectedWord.length) { shake(cmdIn); toast("Type each character individually.", "bad"); return; }
+  closeModal("cmdOverlay");
+  await execCmd(cmd, fileId);
+}
+
+async function execCmd(cmd, fileId) {
+  const api = API(); if (!api) return;
+
+  if (cmd === "OPEN") {
+    const res = await api.open_vault();
+    if (res.ok) { setOpen(true); toast("Vault is open.", "ok"); await refresh(); }
+    else { toast(res.error || "Failed to open vault.", "bad"); }
+
+  } else if (cmd === "REMOVE") {
+    // REMOVE from active vault → holding area
+    if (!S.vaultOpen) { toast("Open the Vault first.", "bad"); return; }
+    const res = await api.remove_file(fileId);
+    if (res.ok) { toast(res.msg, "note"); await refresh(); renderVaultFiles(); }
+    else { toast(res.error, "bad"); }
+
+  } else if (cmd === "DELETE") {
+    const res = await api.delete_file(fileId);
+    if (res.ok) { toast(res.msg, "ok"); await refresh(); renderVaultFiles(); renderDrives(); }
+    else { toast(res.error, "bad"); }
+
+  } else if (cmd === "ARCHIVE") {
+    // Manual archive: active vault file → vault archive (stays inside vault)
+    if (!S.vaultOpen) { toast("Open the Vault first.", "bad"); return; }
+    const res = await api.manual_archive(fileId);
+    if (res.ok) { toast(res.msg, "ok"); await refresh(); renderVaultFiles(); renderArchive(); }
+    else { toast(res.error, "bad"); }
+
+  } else if (cmd === "RELEASE") {
+    // Release: vault canonical → project folder (vault slot empties)
+    if (!S.vaultOpen) { toast("Open the Vault first.", "bad"); return; }
+    const destRes = await api.pick_file();
+    // pick_file gives us a file path — we strip to folder
+    let destFolder = "";
+    if (destRes.ok && destRes.data && destRes.data.path) {
+      const p = destRes.data.path;
+      const sep = p.includes("\\\\") ? "\\\\" : "/";
+      const parts = p.split(sep); parts.pop();
+      destFolder = parts.join(sep) || p;
+    }
+    if (!destFolder) { toast("No destination folder selected — Release cancelled.", "note"); return; }
+    const res = await api.release_from_vault(fileId, destFolder);
+    if (res.ok) { toast(res.msg, "ok"); await refresh(); renderVaultFiles(); renderArchive(); }
+    else { toast(res.error, "bad"); }
+
+  } else if (cmd === "REMOVE_ARCHIVE") {
+    // Remove from archive: archive entry → project folder (archive slot empties)
+    if (!S.vaultOpen) { toast("Open the Vault first.", "bad"); return; }
+    const destRes = await api.pick_file();
+    let destFolder = "";
+    if (destRes.ok && destRes.data && destRes.data.path) {
+      const p = destRes.data.path;
+      const sep = p.includes("\\\\") ? "\\\\" : "/";
+      const parts = p.split(sep); parts.pop();
+      destFolder = parts.join(sep) || p;
+    }
+    if (!destFolder) { toast("No destination folder selected — Remove cancelled.", "note"); return; }
+    const res = await api.remove_from_archive(fileId, destFolder);
+    if (res.ok) { toast(res.msg, "ok"); await refresh(); renderArchive(); }
+    else { toast(res.error, "bad"); }
+  }
+}
+
+// COPY is non-destructive — no enforcer modal needed, call directly
+async function copyFromVault(fileId) {
+  const api = API(); if (!api) return;
+  if (!S.vaultOpen) { toast("Open the Vault first.", "bad"); return; }
+  // Destination = pick a file in the target folder
+  const destRes = await api.pick_file();
+  let destFolder = "";
+  if (destRes.ok && destRes.data && destRes.data.path) {
+    const p = destRes.data.path;
+    const sep = p.includes("\\\\") ? "\\\\" : "/";
+    const parts = p.split(sep); parts.pop();
+    destFolder = parts.join(sep) || p;
+  }
+  if (!destFolder) { toast("No destination folder selected — Copy cancelled.", "note"); return; }
+  const res = await api.copy_from_vault(fileId, destFolder);
+  if (res.ok) { toast(res.msg, "ok"); }
+  else { toast(res.error, "bad"); }
+}
+
+/* ═══════════════════════════════════════════
+   MODALS
+   ═══════════════════════════════════════════ */
+function showModal(name) {
+  if (name === "newProject") {
+    document.getElementById("npName").value = "";
+    document.getElementById("npPath").value = "";
+    document.getElementById("newProjectOverlay").classList.add("open");
+    setTimeout(() => document.getElementById("npName").focus(), 80);
+
+  } else if (name === "addFile") {
+    const sel = document.getElementById("afProject");
+    sel.innerHTML = '<option value="">Select a project...</option>' +
+      S.projects.map(p => `<option value="${esc(p.name)}">${esc(p.name)}</option>`).join("");
+    document.getElementById("afPath").value = "";
+    document.getElementById("afVersion").value = "V1";
+    document.getElementById("addFileOverlay").classList.add("open");
+  }
+}
+
+async function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+  if (id === "cmdOverlay") {
+    cmdIn.value = ""; S.lastLen = 0; S.ks = []; S.pendingCmd = null;
+    S._modalLocked = false;  // release mutex
+    const api = API(); if (api) await api.reset_enforcer();
+  }
+  if (id === "promoteOverlay") {
+    document.getElementById("promoteNewVer").value = "";
+    S.pendingProject = null;
+  }
+}
+
+document.querySelectorAll(".overlay").forEach(o => {
+  o.addEventListener("click", e => { if (e.target === o) closeModal(o.id); });
+});
+
+/* ═══════════════════════════════════════════
+   FILE PICKER — native OS dialog via pywebview
+   ═══════════════════════════════════════════ */
+async function pickFile() {
+  const api = API(); if (!api) return;
+  const res = await api.pick_file();
+  if (res.ok && res.data && res.data.path) {
+    document.getElementById("afPath").value = res.data.path;
+  }
+}
+
+async function pickFolder() {
+  // pywebview can pick folders too — we open a file dialog and strip the filename
+  const api = API(); if (!api) return;
+  const res = await api.pick_file();
+  if (res.ok && res.data && res.data.path) {
+    // Strip filename to get directory
+    const p = res.data.path;
+    const sep = p.includes("\\") ? "\\" : "/";
+    const parts = p.split(sep);
+    parts.pop(); // remove filename
+    document.getElementById("npPath").value = parts.join(sep) || p;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════ */
+async function createProject() {
+  const api  = API(); if (!api) return;
+  const name = document.getElementById("npName").value.trim();
+  const path = document.getElementById("npPath").value.trim();
+  if (!name) { toast("A project name is required.", "bad"); return; }
+  const res = await api.create_cradle(name, path);
+  if (res.ok) {
+    closeModal("newProjectOverlay");
+    toast(res.msg, "ok");
+    await refresh();
+    renderAll();
+  } else {
+    toast(res.error, "bad");
+  }
+}
+
+function projectCards(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!S.projects.length) {
+    el.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <svg class="empty-ornament" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="12" width="40" height="30" rx="2"/><path d="M12 12V9a5 5 0 0110 0v3"/><circle cx="24" cy="27" r="4"/><line x1="24" y1="31" x2="24" y2="36"/></svg>
+      <div class="empty-title">No projects yet</div>
+      <div class="empty-body">Create your first Cradle to begin protecting files</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = S.projects.map((p, i) => {
+    const count   = S.files.filter(f => f.project_name === p.name && f.status === "vault_protected").length;
+    const ci      = `ci-${i % 12}`;
+    const version = S.files.filter(f => f.project_name === p.name && f.status === "vault_protected").map(f => f.version)[0] || "V1";
+    return `<div class="cradle-card ${ci}" onclick="vnGo('vault',null,null)">
+      <div class="cradle-card-header"></div>
+      <div class="cradle-card-body">
+        <span class="cradle-version-tag">${esc(version)}</span>
+        <div class="cradle-card-name">${esc(p.name)}</div>
+        <div class="cradle-card-path">${esc(p.root_folder || "(no folder set)")}</div>
+        <div class="cradle-card-foot">
+          <div class="cradle-card-stat"><strong>${count}</strong> file${count !== 1 ? "s" : ""}</div>
+          <div class="cradle-card-stat">Created <strong>${(p.created_at || "").slice(0,10) || "—"}</strong></div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════
+   FILES — add to vault
+   ═══════════════════════════════════════════ */
+async function addFile() {
+  const api     = API(); if (!api) return;
+  const path    = document.getElementById("afPath").value.trim();
+  const project = document.getElementById("afProject").value;
+  const version = (document.getElementById("afVersion").value || "V1").trim();
+  if (!path)    { toast("Provide a file path — type it or use Browse.", "bad"); return; }
+  if (!project) { toast("Select a project.", "bad"); return; }
+  const res = await api.add_file(path, project, version);
+  if (res.ok) {
+    closeModal("addFileOverlay");
+    toast(res.msg, "ok");
+    await refresh();
+    renderVaultFiles();
+  } else {
+    toast(res.error, "bad");
+  }
+}
+
+function renderVaultFiles() {
+  const el = document.getElementById("vaultFileRows");
+  if (!el) return;
+  const rows = S.files.filter(f => !f.is_archive);
+  if (!rows.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-body">No files in the vault yet — add one with "+ Add File"</div></div>`;
+    return;
+  }
+  el.innerHTML = rows.map(f => {
+    // Display the original filename, not the vault UUID path
+    const fname    = (f.original_path || f.vault_path || f.file_id).split(/[/\\]/).pop();
+    const chip     = chipFor(f.status);
+    const canRemove = f.status === "vault_protected" && S.vaultOpen;
+    const canDelete = f.status === "removed";
+    return `<div class="table-row">
+      <div class="table-file-name">
+        <svg class="table-file-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 1h5.5L11 3.5V13H3V1z"/><path d="M8.5 1v2.5H11"/></svg>
+        ${esc(fname)}
+      </div>
+      <div class="table-cell">${esc(f.project_name)}</div>
+      <div class="table-cell">${esc(f.version)}</div>
+      <div>${chip}</div>
+      <div class="table-actions">
+        ${canRemove ? `<button class="table-btn" onclick="copyFromVault('${esc(f.file_id)}')">Copy</button>` : ""}
+        ${canRemove ? `<button class="table-btn" onclick="triggerCmd('ARCHIVE','${esc(f.file_id)}')">Archive</button>` : ""}
+        ${canRemove ? `<button class="table-btn remove" onclick="triggerCmd('RELEASE','${esc(f.file_id)}')">Release</button>` : ""}
+        ${canRemove ? `<button class="table-btn remove" onclick="triggerCmd('REMOVE','${esc(f.file_id)}')">Remove</button>` : ""}
+        ${canDelete ? `<button class="table-btn delete" onclick="triggerCmd('DELETE','${esc(f.file_id)}')">Delete</button>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function chipFor(status) {
+  return {
+    vault_protected: `<span class="chip chip-safe">● Protected</span>`,
+    removed:         `<span class="chip chip-staging">● Holding</span>`,
+    archived:        `<span class="chip chip-archive">● Archived</span>`,
+  }[status] || `<span class="chip chip-archive">${esc(status)}</span>`;
+}
+
+function renderFiles() {
+  const el = document.getElementById("filesGrid");
+  if (!el) return;
+  if (!S.projects.length) {
+    el.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <svg class="empty-ornament" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 10h14l4 5h18v26H6z"/><line x1="14" y1="26" x2="34" y2="26"/><line x1="14" y1="31" x2="26" y2="31"/></svg>
+      <div class="empty-title">No cradle folders yet</div>
+      <div class="empty-body">Create a Cradle to begin organising files</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = S.projects.map((p, i) => {
+    const count = S.files.filter(f => f.project_name === p.name && f.status === "vault_protected").length;
+    return `<div class="folder-card ci-${i % 12}" onclick="vnGo('vault',null,null)">
+      <div class="folder-card-tab"></div>
+      <div class="folder-card-body">
+        <div class="hex-mount"><div class="hex"></div></div>
+        <svg class="folder-card-icon" viewBox="0 0 32 28" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 6h10l3 4h15v16H2z"/><path d="M8.5 1v2.5H11"/></svg>
+        <div class="folder-card-name">${esc(p.name)}</div>
+        <div class="folder-card-meta">${count} file${count !== 1 ? "s" : ""} · ${esc(p.root_folder || "(no folder)")}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════
+   ARCHIVE DISTRICT
+   ═══════════════════════════════════════════ */
+function renderArchive() {
+  const el = document.getElementById("archiveBody");
+  if (!el) return;
+  const archived = S.archivedFiles;
+  if (!archived.length) {
+    el.innerHTML = `<div class="empty">
+      <svg class="empty-ornament" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="8" width="40" height="32" rx="2"/><line x1="4" y1="18" x2="44" y2="18"/><line x1="16" y1="30" x2="32" y2="30"/></svg>
+      <div class="empty-title">No archived versions yet</div>
+      <div class="empty-body">Promote a project version to create archive entries</div>
+    </div>`;
+    return;
+  }
+  // Group by project + version
+  const groups = {};
+  archived.forEach(f => {
+    const key = `${f.project_name}||${f.version}`;
+    if (!groups[key]) groups[key] = { project:f.project_name, version:f.version, files:[] };
+    groups[key].files.push(f);
+  });
+  el.innerHTML = Object.values(groups).map(g => `
+    <div class="archive-block">
+      <div class="archive-version-head">
+        <span>${esc(g.project)} — <em>${esc(g.version)}</em></span>
+        <span class="archive-version-meta">${g.files.length} file${g.files.length !== 1 ? "s" : ""}</span>
+      </div>
+      ${g.files.map(f => {
+        const fname = (f.original_path || f.vault_path || f.file_id).split(/[/\\]/).pop();
+        return `<div class="archive-row">
+          <span>${esc(fname)}</span>
+          <span>${esc(f.project_name)}</span>
+          <span>${(f.created_at || "—").slice(0,10)}</span>
+          <div style="display:flex;gap:4px;">
+            <button class="table-btn" onclick="copyFromVault('${esc(f.file_id)}')">Copy</button>
+            <button class="table-btn" onclick="restoreFromArchive('${esc(f.file_id)}')">Restore</button>
+            <button class="table-btn remove" onclick="triggerCmd('REMOVE_ARCHIVE','${esc(f.file_id)}')">Remove</button>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`).join("");
+}
+
+async function restoreFromArchive(fileId) {
+  const api = API(); if (!api) return;
+  const res = await api.restore_from_archive(fileId);
+  if (res.ok) { toast(res.msg, "ok"); await refresh(); renderArchive(); }
+  else        { toast(res.error, "bad"); }
+}
+
+/* ═══════════════════════════════════════════
+   CONTENDER — manual version promotion
+   ═══════════════════════════════════════════ */
+function renderContender() {
+  const el = document.getElementById("contenderRows");
+  if (!el) return;
+  if (!S.projects.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-body">No cradle projects yet</div></div>`;
+    return;
+  }
+  el.innerHTML = S.projects.map((p, i) => {
+    const activeFiles   = S.files.filter(f => f.project_name === p.name && f.status === "vault_protected");
+    const currentVersion = activeFiles.length ? activeFiles[0].version : "V1";
+    return `<div class="table-row" style="grid-template-columns:2fr 1fr 100px 1fr 120px">
+      <div class="table-file-name">
+        <svg class="table-file-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 4h10v7H1z"/><path d="M1 4l2.5-3h5L11 4"/></svg>
+        ${esc(p.name)}
+      </div>
+      <div class="table-cell">${activeFiles.length} protected</div>
+      <div class="table-cell">${esc(currentVersion)}</div>
+      <div><span class="chip chip-safe">● Active</span></div>
+      <div class="table-actions">
+        ${activeFiles.length ? `<button class="table-btn" onclick="openPromoteModal('${esc(p.name)}','${esc(currentVersion)}')">Promote →</button>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function openPromoteModal(projectName, currentVersion) {
+  S.pendingProject = projectName;
+  document.getElementById("promoteInstr").textContent =
+    `"${projectName}" — current version: ${currentVersion}. Archive this and start a new version.`;
+  document.getElementById("promoteNewVer").value = "";
+  document.getElementById("promoteOverlay").classList.add("open");
+  setTimeout(() => document.getElementById("promoteNewVer").focus(), 80);
+}
+
+async function submitPromote() {
+  const api    = API(); if (!api) return;
+  const newVer = document.getElementById("promoteNewVer").value.trim();
+  if (!newVer)         { toast("New version name is required.", "bad"); return; }
+  if (!S.pendingProject) { toast("No project selected.", "bad"); return; }
+  const res = await api.promote_version(S.pendingProject, newVer);
+  if (res.ok) {
+    closeModal("promoteOverlay");
+    toast(res.msg, "ok");
+    await refresh();
+    renderContender();
+  } else {
+    toast(res.error, "bad");
+  }
+}
+
+/* ═══════════════════════════════════════════
+   DRIVE MONITOR + STAGING
+   ═══════════════════════════════════════════ */
+function renderDrives() {
+  // Drive grid — from S.drives loaded at refresh time
+  const driveEl = document.getElementById("driveGrid");
+  if (driveEl) {
+    if (!S.drives.length) {
+      driveEl.innerHTML = `<div class="empty"><div class="empty-body">No drive data available</div></div>`;
+    } else {
+      driveEl.innerHTML = S.drives.map(d => `
+        <div class="drive-card ${d.has_vault ? "has-vault" : ""}">
+          <div class="drive-letter">${esc(d.letter)}</div>
+          <div class="drive-status">${d.has_vault ? "Vault data present" : "No Vault data"}</div>
+          ${d.warning ? `<div class="drive-warning">⚠ Vault active on this drive</div>` : ""}
+        </div>`).join("");
+    }
+  }
+
+  // Staging — removed files waiting for DELETE
+  const staging = S.files.filter(f => f.status === "removed");
+  const el = document.getElementById("stagingBody");
+  if (!el) return;
+  if (!staging.length) {
+    el.innerHTML = `<div class="empty" style="padding:32px"><div class="empty-body">No files in staging</div></div>`;
+    return;
+  }
+  el.innerHTML = staging.map(f => {
+    const fname     = (f.original_path || f.vault_path || f.file_id).split(/[/\\]/).pop();
+    const removedAt = (f.updated_at || "—").slice(0, 10);
+    const msGone    = f.updated_at ? Date.now() - new Date(f.updated_at).getTime() : 0;
+    const daysLeft  = f.updated_at ? Math.max(0, 30 - Math.floor(msGone / 86400000)) : "—";
+    const dColor    = typeof daysLeft === "number" && daysLeft < 5 ? "var(--clay)" : "var(--ink-dim)";
+    return `<div class="table-row" style="grid-template-columns:2fr 1fr 1fr 100px">
+      <span class="table-cell">${esc(fname)}</span>
+      <span class="table-cell">${esc(f.project_name)}</span>
+      <span class="table-cell">${removedAt}</span>
+      <span class="table-cell" style="color:${dColor}">${daysLeft} days</span>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════
+   EVENT LOG
+   ═══════════════════════════════════════════ */
+function typeClass(type) {
+  if (/VIOLATION|FAILED|DELETE/.test(type))  return "alert";
+  if (/RESTORED|READY|OPENED/.test(type))    return "restored";
+  if (/REMOVED|PURGED/.test(type))           return "warn";
+  return "";
+}
+
+function logEntries(events) {
+  return events.map(e => `
+    <div class="log-entry">
+      <span class="log-ts">${(e.timestamp || "—").slice(11,19)}</span>
+      <span class="log-type ${typeClass(e.event_type)}">${esc(e.event_type || "")}</span>
+      <span class="log-desc">${esc(e.description || "")}</span>
+    </div>`).join("");
+}
+
+function renderDashLog() {
+  const el = document.getElementById("dashLog");
+  if (el) el.innerHTML = logEntries(S.events.slice(0, 20));
+  const lc = document.getElementById("logCount");
+  if (lc) lc.textContent = `${S.events.length} entries`;
+  const bl = document.getElementById("badgeLog");
+  if (bl) bl.textContent = S.events.length;
+}
+
+function renderFullLog() {
+  const el = document.getElementById("fullLog");
+  if (el) el.innerHTML = logEntries(S.events);
+  const txt = `${S.events.length} events`;
+  const fm = document.getElementById("fullLogMeta");   if (fm) fm.textContent = txt;
+  const fc = document.getElementById("fullLogCount");  if (fc) fc.textContent = txt;
+}
+
+/* ═══════════════════════════════════════════
+   STATS
+   ═══════════════════════════════════════════ */
+function updateStats() {
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set("sCradles",   S.stats.projects  || 0);
+  set("sProtected", S.stats.protected || 0);
+  set("sArchived",  S.stats.archived  || 0);
+  set("sEvents",    S.stats.events    || 0);
+  set("badgeProjects", S.stats.projects || 0);
+}
+
+/* ═══════════════════════════════════════════
+   RENDER ALL
+   ═══════════════════════════════════════════ */
+function renderAll() {
+  projectCards("dashProjects");
+  projectCards("allProjects");
+  renderVaultFiles();
+  renderFiles();
+  updateStats();
+  renderDashLog();
+}
+
+/* ═══════════════════════════════════════════
+   WATCHER TICK
+   Timestamp updates every second.
+   Full state refresh every 5 seconds — catches
+   any file integrity events from the engine watcher.
+   ═══════════════════════════════════════════ */
+function startWatcher() {
+  // Clock tick
+  setInterval(() => {
+    const el = document.getElementById("lastCheck");
+    if (el) el.textContent = new Date().toTimeString().slice(0, 8);
+    const wt = document.getElementById("watcherTs");
+    if (wt) wt.textContent = new Date().toTimeString().slice(0, 8);
+  }, 1000);
+
+  // Lightweight heartbeat — only calls full refresh when state actually changes
+  let _lastEventTs = "";
+  setInterval(async () => {
+    const api = API(); if (!api) return;
+    try {
+      const hb = await api.get_heartbeat();
+      if (!hb.ok) return;
+      // Full refresh only when something changed in the engine
+      if (hb.last_event_ts !== _lastEventTs) {
+        _lastEventTs = hb.last_event_ts;
+        await refresh();
+        const active = document.querySelector(".view.active");
+        if (!active) return;
+        const id = active.id.replace("view-", "");
+        if (id === "vault")     renderVaultFiles();
+        if (id === "drives")    renderDrives();
+        if (id === "log")       renderFullLog();
+        if (id === "archive")   renderArchive();
+        if (id === "contender") renderContender();
+        updateStats();
+        renderDashLog();
+      }
+      // Always update vault open indicator (cheap, no DB)
+      setOpen(hb.vault_open);
+    } catch(e) { console.warn("heartbeat failed:", e); }
+  }, 5000);
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════ */
+let _toastTimer;
+function toast(msg, type = "note") {
+  const el = document.getElementById("toastEl");
+  document.getElementById("toastMsg").textContent = msg;
+  el.className = `toast show ${type}`;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove("show"), 3800);
+}
+
+/* ═══════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════ */
+function shake(el) {
+  el.classList.add("error");
+  setTimeout(() => el.classList.remove("error"), 400);
+}
+
+function esc(s) {
+  return String(s || "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+/* ═══════════════════════════════════════════
+   BOOT — tutorial is the gate.
+   exitTutorial() → init() → engine.
+   ═══════════════════════════════════════════ */
+// Nothing auto-starts. The tutorial overlay is shown first.
+// When the user finishes or skips, exitTutorial() calls init().
+</script>
+</body>
+</html>
